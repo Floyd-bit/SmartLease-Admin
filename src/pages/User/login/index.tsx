@@ -246,6 +246,16 @@ const Login: React.FC<LoginProps> = (props) => {
             <FormattedMessage id="pages.login.forgotPassword" defaultMessage="Forget password" />
           </a>
         </div>
+        <div>
+        <a
+            style={{
+              float: 'center',
+            }}
+            href="/user/userregister"
+          >
+            没有账号？点击注册
+          </a>
+        </div>
       </ProForm>
       <Space className={styles.other}>
         <FormattedMessage id="pages.login.loginWith" defaultMessage="Other login methods" />

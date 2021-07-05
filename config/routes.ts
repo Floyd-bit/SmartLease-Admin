@@ -1,4 +1,4 @@
-﻿export default [
+export default [
   {
     path: '/',
     component: '../layouts/BlankLayout',
@@ -12,6 +12,17 @@
             path: '/user/login',
             component: './User/login',
           },
+          {
+            name: 'register',
+            path: '/user/userregister',
+            component: './UserRegister',
+          },
+          {
+            name: '注册结果页',
+            icon: 'smile',
+            path: '/user/userregisterresult',
+            component: './UserRegisterResult',
+          },
         ],
       },
       {
@@ -24,8 +35,33 @@
             authority: ['admin', 'user'],
             routes: [
               {
+                name: '分析页',
+                icon: 'smile',
+                path: '/dashboard',
+                component: './Dashboard',
+              },
+              {
+                path: '/accounts',
+                name: '个人页',
+                icon: 'crown',
+                routes: [
+                  {
+                    name: '个人设置',
+                    icon: 'smile',
+                    path: '/accounts/accountsettings',
+                    component: './AccountSettings',
+                  },
+                  {
+                    path: '/accounts/account',
+                    name: '个人中心',
+                    icon: 'smile',
+                    component: './AccountCenter',
+                  },
+                ],
+              },
+              {
                 path: '/',
-                redirect: '/welcome',
+                component: './Welcome',
               },
               {
                 path: '/welcome',
@@ -50,10 +86,17 @@
                 ],
               },
               {
-                name: 'list.table-list',
-                icon: 'table',
-                path: '/list',
-                component: './TableList',
+                path: '/shop',
+                name: '商家页',
+                icon: 'crown',
+                routes: [
+                  {
+                    name: '查询表格',
+                    icon: 'table',
+                    path: '/shop/list',
+                    component: './TableList',
+                  },
+                ]
               },
               {
                 component: './404',
