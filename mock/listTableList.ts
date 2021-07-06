@@ -44,6 +44,7 @@ function getRule(req: Request, res: Response, u: string) {
     ((current as number) - 1) * (pageSize as number),
     (current as number) * (pageSize as number),
   );
+  /*
   const sorter = JSON.parse(params.sorter as any);
   if (sorter) {
     dataSource = dataSource.sort((prev, next) => {
@@ -66,6 +67,7 @@ function getRule(req: Request, res: Response, u: string) {
       return sortNumber;
     });
   }
+  */
   if (params.filter) {
     const filter = JSON.parse(params.filter as any) as {
       [key: string]: string[];

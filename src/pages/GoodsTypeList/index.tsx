@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Input, Drawer  } from 'antd';
+import { Button, message, Input, Drawer } from 'antd';
 import React, { useState, useRef } from 'react';
 import { useIntl, FormattedMessage } from 'umi';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
@@ -70,8 +70,6 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
     await removeRule({
       key: selectedRows.map((row) => row.key),
     });
-    // eslint-disable-next-line no-console
-    console.log(selectedRows.map((row) => row.key));
     hide();
     message.success('Deleted successfully and will refresh soon');
     return true;
@@ -82,7 +80,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   }
 };
 
-const TableList: React.FC = () => {
+const GoodsTypeList: React.FC = () => {
   /**
    * @en-US Pop-up window of new window
    * @zh-CN 新建窗口的弹窗
@@ -374,7 +372,6 @@ const TableList: React.FC = () => {
         closable={false}
       >
         {currentRow?.name && (
-          <>
           <ProDescriptions<TableListItem>
             column={2}
             title={currentRow?.name}
@@ -386,12 +383,10 @@ const TableList: React.FC = () => {
             }}
             columns={columns as ProDescriptionsItemProps<TableListItem>[]}
           />
-          <Button href='../detail'>查看详情</Button>
-          </>
         )}
       </Drawer>
     </PageContainer>
   );
 };
 
-export default TableList;
+export default GoodsTypeList;

@@ -1,4 +1,4 @@
-export default [
+﻿export default [
   {
     path: '/',
     component: '../layouts/BlankLayout',
@@ -18,7 +18,7 @@ export default [
             component: './UserRegister',
           },
           {
-            name: '注册结果页',
+            name: 'results',
             icon: 'smile',
             path: '/user/userregisterresult',
             component: './UserRegisterResult',
@@ -35,25 +35,25 @@ export default [
             authority: ['admin', 'user'],
             routes: [
               {
-                name: '分析页',
+                name: 'analysis',
                 icon: 'smile',
                 path: '/dashboard',
                 component: './Dashboard',
               },
               {
                 path: '/accounts',
-                name: '个人页',
+                name: 'account',
                 icon: 'crown',
                 routes: [
                   {
-                    name: '个人设置',
+                    name: 'settings',
                     icon: 'smile',
                     path: '/accounts/accountsettings',
                     component: './AccountSettings',
                   },
                   {
                     path: '/accounts/account',
-                    name: '个人中心',
+                    name: 'center',
                     icon: 'smile',
                     component: './AccountCenter',
                   },
@@ -86,17 +86,41 @@ export default [
                 ],
               },
               {
+                name: 'profile',
+                path: '/detail',
+                component: './OrderDetail',
+                hidden: true,
+              },
+              {
                 path: '/shop',
-                name: '商家页',
+                name: 'list',
                 icon: 'crown',
                 routes: [
                   {
-                    name: '查询表格',
+                    name: 'table-list',
                     icon: 'table',
                     path: '/shop/list',
                     component: './TableList',
                   },
-                ]
+                  {
+                    name: 'basic-list',
+                    icon: 'smile',
+                    path: '/shop/goodslist',
+                    component: './GoodsLIst',
+                  },
+                  {
+                    name: 'search-list',
+                    icon: 'smile',
+                    path: '/shop/commentslist',
+                    component: './CommentsList',
+                  },
+                  {
+                    name: 'good-type-list',
+                    icon: 'smile',
+                    path: '/shop/goodstypelist',
+                    component: './GoodsTypeList',
+                  },
+                ],
               },
               {
                 component: './404',
