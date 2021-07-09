@@ -8,11 +8,13 @@
  */
 export default {
   dev: {
+    /*
     '/api/': {
-      target: 'https://preview.pro.ant.design',
+      target: 'http://jp-tyo-ilj-1.natfrp.cloud:38298/',
       changeOrigin: true,
-      pathRewrite: { '^': '' },
+      pathRewrite: { '^/api': '' },
     },
+    */
   },
   test: {
     '/api/': {

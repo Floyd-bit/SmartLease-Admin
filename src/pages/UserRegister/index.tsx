@@ -49,7 +49,7 @@ export type UserRegisterParams = {
   mail: string;
   password: string;
   confirm: string;
-  mobile: string;
+  phone: string;
   captcha: string;
   prefix: string;
 };
@@ -70,7 +70,8 @@ const UserRegister: FC<UserRegisterProps> = ({
     if (!userRegister) {
       return;
     }
-    const account = form.getFieldValue('mail');
+    const account = form.getFieldValue('mobile');
+    // 与后台对接改为'创建成功'
     if (userRegister.status === 'ok') {
       message.success('注册成功！');
       history.push({
@@ -169,21 +170,31 @@ const UserRegister: FC<UserRegisterProps> = ({
         <FormattedMessage id="userregister.register.register" />
       </h3>
       <Form form={form} name="UserRegister" onFinish={onFinish}>
-        <FormItem
-          name="mail"
-          rules={[
-            {
-              required: true,
-              message: formatMessage({ id: 'userregister.email.required' }),
-            },
-            {
-              type: 'email',
-              message: formatMessage({ id: 'userregister.email.wrong-format' }),
-            },
-          ]}
-        >
-          <Input size="large" placeholder={formatMessage({ id: 'userregister.email.placeholder' })} />
-        </FormItem>
+      <InputGroup compact>
+          <Select size="large" value={prefix} onChange={changePrefix} style={{ width: '20%' }}>
+            <Option value="86">+86</Option>
+            <Option value="87">+87</Option>
+          </Select>
+          <FormItem
+            style={{ width: '80%' }}
+            name="phone"
+            rules={[
+              {
+                required: true,
+                message: formatMessage({ id: 'userregister.phone-number.required' }),
+              },
+              {
+                pattern: /^\d{11}$/,
+                message: formatMessage({ id: 'userregister.phone-number.wrong-format' }),
+              },
+            ]}
+          >
+            <Input
+              size="large"
+              placeholder={formatMessage({ id: 'userregister.phone-number.placeholder' })}
+            />
+          </FormItem>
+        </InputGroup>
         <Popover
           getPopupContainer={(node) => {
             if (node && node.parentNode) {
@@ -244,31 +255,6 @@ const UserRegister: FC<UserRegisterProps> = ({
             placeholder={formatMessage({ id: 'userregister.confirm-password.placeholder' })}
           />
         </FormItem>
-        <InputGroup compact>
-          <Select size="large" value={prefix} onChange={changePrefix} style={{ width: '20%' }}>
-            <Option value="86">+86</Option>
-            <Option value="87">+87</Option>
-          </Select>
-          <FormItem
-            style={{ width: '80%' }}
-            name="mobile"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({ id: 'userregister.phone-number.required' }),
-              },
-              {
-                pattern: /^\d{11}$/,
-                message: formatMessage({ id: 'userregister.phone-number.wrong-format' }),
-              },
-            ]}
-          >
-            <Input
-              size="large"
-              placeholder={formatMessage({ id: 'userregister.phone-number.placeholder' })}
-            />
-          </FormItem>
-        </InputGroup>
         <Row gutter={8}>
           <Col span={16}>
             <FormItem

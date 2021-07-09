@@ -40,6 +40,7 @@ const Model: LoginModelType = {
         payload: response,
       });
       // Login successfully
+      // 与后台对接时判断条件改为'登陆成功'
       if (response.status === 'ok') {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
@@ -80,9 +81,12 @@ const Model: LoginModelType = {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
+      // setAuthority(payload.currentAuthority);
+      // 后端接口尚未完善
+      setAuthority("admin");
       return {
         ...state,
+        // 与后台对接时改为message
         status: payload.status,
         type: payload.type,
       };

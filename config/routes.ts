@@ -4,23 +4,23 @@
     component: '../layouts/BlankLayout',
     routes: [
       {
-        path: '/user',
+        path: '/',
         component: '../layouts/UserLayout',
         routes: [
           {
             name: 'login',
-            path: '/user/login',
+            path: '/',
             component: './User/login',
           },
           {
             name: 'register',
-            path: '/user/userregister',
+            path: '/userregister',
             component: './UserRegister',
           },
           {
             name: 'results',
             icon: 'smile',
-            path: '/user/userregisterresult',
+            path: '/userregisterresult',
             component: './UserRegisterResult',
           },
         ],
@@ -37,8 +37,27 @@
               {
                 name: 'analysis',
                 icon: 'smile',
-                path: '/dashboard',
+                path: '/',
                 component: './Dashboard',
+              },
+              {
+                path: '/goods',
+                name: 'goods',
+                icon: 'crown',
+                routes: [
+                  {
+                    name: '商品列表',
+                    icon: 'smile',
+                    path: '/goods/goodstypelist',
+                    component: './GoodsTypeList',
+                  },             
+                  {
+                    name: '添加商品',
+                    icon: 'smile',
+                    path: '/goods/addgoodsform',
+                    component: './AddGoodsForm',
+                  },
+                ]
               },
               {
                 path: '/accounts',
@@ -60,16 +79,6 @@
                 ],
               },
               {
-                path: '/',
-                component: './Welcome',
-              },
-              {
-                path: '/welcome',
-                name: 'welcome',
-                icon: 'smile',
-                component: './Welcome',
-              },
-              {
                 path: '/admin',
                 name: 'admin',
                 icon: 'crown',
@@ -80,7 +89,6 @@
                     path: '/admin/sub-page',
                     name: 'sub-page',
                     icon: 'smile',
-                    component: './Welcome',
                     authority: ['admin'],
                   },
                 ],
@@ -113,12 +121,6 @@
                     icon: 'smile',
                     path: '/shop/commentslist',
                     component: './CommentsList',
-                  },
-                  {
-                    name: 'good-type-list',
-                    icon: 'smile',
-                    path: '/shop/goodstypelist',
-                    component: './GoodsTypeList',
                   },
                 ],
               },

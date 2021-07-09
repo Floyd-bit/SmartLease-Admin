@@ -3,6 +3,7 @@ import type { Effect, Reducer } from 'umi';
 import { fakeRegister } from './service';
 
 export type StateType = {
+  // status?: '创建成功' | '手机号重复';
   status?: 'ok' | 'error';
   currentAuthority?: 'user' | 'guest' | 'admin';
 };
@@ -39,6 +40,7 @@ const Model: ModelType = {
     registerHandle(state, { payload }) {
       return {
         ...state,
+        // 与后台对接改为status
         status: payload.status,
       };
     },

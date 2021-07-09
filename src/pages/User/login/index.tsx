@@ -156,7 +156,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 size: 'large',
                 prefix: <MobileOutlined className={styles.prefixIcon} />,
               }}
-              name="mobile"
+              name="phone"
               placeholder={intl.formatMessage({
                 id: 'pages.login.phoneNumber.placeholder',
                 defaultMessage: 'Phone number',
@@ -167,7 +167,7 @@ const Login: React.FC<LoginProps> = (props) => {
                   message: (
                     <FormattedMessage
                       id="pages.login.phoneNumber.required"
-                      defaultMessage="Please enter phone number!"
+                      defaultMessage="Please enter phone number!: 13609213518"
                     />
                   ),
                 },
@@ -177,6 +177,28 @@ const Login: React.FC<LoginProps> = (props) => {
                     <FormattedMessage
                       id="pages.login.phoneNumber.invalid"
                       defaultMessage="Malformed phone number!"
+                    />
+                  ),
+                },
+              ]}
+            />
+            <ProFormText.Password
+              name="password"
+              fieldProps={{
+                size: 'large',
+                prefix: <LockOutlined className={styles.prefixIcon} />,
+              }}
+              placeholder={intl.formatMessage({
+                id: 'pages.login.password.placeholder',
+                defaultMessage: 'Password: ant.design',
+              })}
+              rules={[
+                {
+                  required: true,
+                  message: (
+                    <FormattedMessage
+                      id="pages.login.password.required"
+                      defaultMessage="Please enter password！123456"
                     />
                   ),
                 },

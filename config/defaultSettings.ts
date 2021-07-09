@@ -13,7 +13,7 @@ const proSettings: DefaultSettings = {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: '租享宝',
+  title: '租享宝商家版',
   pwa: false,
   iconfontUrl: '',
 };
