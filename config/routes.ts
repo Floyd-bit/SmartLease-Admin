@@ -38,7 +38,7 @@
                 name: 'analysis',
                 icon: 'smile',
                 path: '/dashboard',
-                component: './Dashboard',
+                component: './MainPage',
               },
               {
                 path: '/accounts',
