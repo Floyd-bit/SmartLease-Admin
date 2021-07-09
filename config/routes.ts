@@ -4,23 +4,23 @@
     component: '../layouts/BlankLayout',
     routes: [
       {
-        path: '/',
+        path: '/user',
         component: '../layouts/UserLayout',
         routes: [
           {
             name: 'login',
-            path: '/',
+            path: '/user/login',
             component: './User/login',
           },
           {
             name: 'register',
-            path: '/userregister',
+            path: '/user/userregister',
             component: './UserRegister',
           },
           {
             name: 'results',
             icon: 'smile',
-            path: '/userregisterresult',
+            path: '/user/userregisterresult',
             component: './UserRegisterResult',
           },
         ],
