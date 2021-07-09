@@ -1,4 +1,12 @@
-﻿export default [
+﻿/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-09 20:19:49
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-09 20:51:25
+ */
+export default [
   {
     path: '/',
     component: '../layouts/BlankLayout',
