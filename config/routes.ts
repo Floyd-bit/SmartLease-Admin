@@ -1,5 +1,5 @@
 ﻿/*
- * @Description: 
+ * @Description:
  * @version: 1.0
  * @Author: 赵卓轩
  * @Date: 2021-07-09 20:19:49
@@ -46,7 +46,7 @@ export default [
                 name: 'analysis',
                 icon: 'smile',
                 path: '/',
-                component: './Dashboard',
+                component: './MainPage',
               },
               {
                 path: '/goods',
@@ -58,14 +58,14 @@ export default [
                     icon: 'smile',
                     path: '/goods/goodstypelist',
                     component: './GoodsTypeList',
-                  },             
+                  },
                   {
                     name: '添加商品',
                     icon: 'smile',
                     path: '/goods/addgoodsform',
                     component: './AddGoodsForm',
                   },
-                ]
+                ],
               },
               {
                 path: '/accounts',
