@@ -106,7 +106,7 @@ export default {
       });
       return;
     }
-    if (type === 'mobile') {
+    if (type === 'mobile'&& password === '123456') {
       res.send({
         status: 'ok',
         type,

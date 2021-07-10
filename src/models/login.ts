@@ -1,3 +1,11 @@
+/*
+ * @Description: 登录模块
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-05 10:45:55
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-09 20:49:32
+ */
 import { stringify } from 'querystring';
 import type { Reducer, Effect } from 'umi';
 import { history } from 'umi';
@@ -40,6 +48,7 @@ const Model: LoginModelType = {
         payload: response,
       });
       // Login successfully
+      // 与后台对接时判断条件改为'登陆成功'
       if (response.status === 'ok') {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
@@ -80,9 +89,12 @@ const Model: LoginModelType = {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
+      // setAuthority(payload.currentAuthority);
+      // 后端接口尚未完善
+      setAuthority("admin");
       return {
         ...state,
+        // 与后台对接时改为message
         status: payload.status,
         type: payload.type,
       };

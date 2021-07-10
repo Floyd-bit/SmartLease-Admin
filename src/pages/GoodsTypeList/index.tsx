@@ -1,5 +1,13 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Input, Drawer } from 'antd';
+/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-06 11:20:47
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-09 20:49:58
+ */
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, message, Input, Drawer ,Tabs} from 'antd';
 import React, { useState, useRef } from 'react';
 import { useIntl, FormattedMessage } from 'umi';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
@@ -10,9 +18,10 @@ import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
-import type { TableListItem } from './data.d';
+import type { TableListItem } from './data';
 import { queryRule, updateRule, addRule, removeRule } from './service';
 
+const { TabPane } = Tabs;
 /**
  * @en-US Add node
  * @zh-CN 添加节点
@@ -80,6 +89,10 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   }
 };
 
+function callback(key) {
+  console.log(key);
+}
+
 const GoodsTypeList: React.FC = () => {
   /**
    * @en-US Pop-up window of new window
@@ -105,6 +118,13 @@ const GoodsTypeList: React.FC = () => {
   const intl = useIntl();
 
   const columns: ProColumns<TableListItem>[] = [
+    // 商品编号
+    {
+      title: <FormattedMessage id="pages.searchTable.no" defaultMessage="Description" />,
+      dataIndex: 'no',
+      valueType: 'textarea',
+    },
+    // 商品名称
     {
       title: (
         <FormattedMessage
@@ -127,11 +147,7 @@ const GoodsTypeList: React.FC = () => {
         );
       },
     },
-    {
-      title: <FormattedMessage id="pages.searchTable.titleDesc" defaultMessage="Description" />,
-      dataIndex: 'desc',
-      valueType: 'textarea',
-    },
+    // 交易量
     {
       title: (
         <FormattedMessage
@@ -142,16 +158,26 @@ const GoodsTypeList: React.FC = () => {
       dataIndex: 'callNo',
       sorter: true,
       hideInForm: true,
+      hideInSearch: true,
       renderText: (val: string) =>
         `${val}${intl.formatMessage({
           id: 'pages.searchTable.tenThousand',
           defaultMessage: ' 万 ',
         })}`,
     },
+    // 价格/运费
+    {
+      title: <FormattedMessage id="pages.searchTable.titleDesc" defaultMessage="Description" />,
+      dataIndex: 'desc',
+      valueType: 'textarea',
+      hideInSearch: true,
+    },
+    // 是否上架
     {
       title: <FormattedMessage id="pages.searchTable.titleStatus" defaultMessage="Status" />,
       dataIndex: 'status',
       hideInForm: true,
+      hideInSearch: true,
       valueEnum: {
         0: {
           text: (
@@ -185,6 +211,14 @@ const GoodsTypeList: React.FC = () => {
         },
       },
     },
+    // 库存
+    {
+      title: <FormattedMessage id="pages.searchTable.amount" defaultMessage="Description" />,
+      dataIndex: 'amount',
+      valueType: 'textarea',
+      hideInSearch: true,
+    },
+    // 加入时间
     {
       title: (
         <FormattedMessage
@@ -214,37 +248,51 @@ const GoodsTypeList: React.FC = () => {
         return defaultRender(item);
       },
     },
+    // 押金 （元）
+    {
+      title: <FormattedMessage id="pages.searchTable.money" defaultMessage="Description" />,
+      dataIndex: 'money',
+      valueType: 'textarea',
+      hideInSearch: true,
+    },
+    // 操作
     {
       title: <FormattedMessage id="pages.searchTable.titleOption" defaultMessage="Operating" />,
       dataIndex: 'option',
       valueType: 'option',
+      hideInSearch: true,
       render: (_, record) => [
-        <a
-          key="config"
-          onClick={() => {
-            handleUpdateModalVisible(true);
-            setCurrentRow(record);
-          }}
-        >
-          <FormattedMessage id="pages.searchTable.config" defaultMessage="Configuration" />
-        </a>,
-        <a key="subscribeAlert" href="https://procomponents.ant.design/">
-          <FormattedMessage
-            id="pages.searchTable.subscribeAlert"
-            defaultMessage="Subscribe to alerts"
-          />
-        </a>,
+        // 编辑
+        <Button type="primary" icon={<EditOutlined/>} onClick={() => {
+          handleUpdateModalVisible(true);
+          setCurrentRow(record);
+        }}></Button>,
+        // 删除     
+        <Button type="primary" danger icon={<DeleteOutlined/>} onClick={
+          async () => {
+            setSelectedRows([record]);
+            await handleRemove(selectedRowsState);
+            setSelectedRows([]);
+            actionRef.current?.reloadAndRest?.();
+          }}>          
+        </Button>
       ],
     },
   ];
 
   return (
     <PageContainer>
+        <Tabs defaultActiveKey="1" onChange={callback}>
+          <TabPane tab="商品列表" key="1">
+          </TabPane>
+          <TabPane tab="上架商品" key="2">
+          </TabPane>
+          <TabPane tab="下架商品" key="3">
+          </TabPane>
+          <TabPane tab="商品回收站" key="4">
+          </TabPane>
+        </Tabs>
       <ProTable<TableListItem>
-        headerTitle={intl.formatMessage({
-          id: 'pages.searchTable.title',
-          defaultMessage: 'Enquiry form',
-        })}
         actionRef={actionRef}
         rowKey="key"
         search={{
@@ -266,6 +314,7 @@ const GoodsTypeList: React.FC = () => {
         rowSelection={{
           onChange: (_, selectedRows) => {
             setSelectedRows(selectedRows);
+            console.log(selectedRows);
           },
         }}
       />
@@ -290,6 +339,7 @@ const GoodsTypeList: React.FC = () => {
         >
           <Button
             onClick={async () => {
+              console.log(selectedRowsState);
               await handleRemove(selectedRowsState);
               setSelectedRows([]);
               actionRef.current?.reloadAndRest?.();

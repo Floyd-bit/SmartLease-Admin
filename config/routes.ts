@@ -1,4 +1,12 @@
-﻿export default [
+﻿/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-09 20:19:49
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-09 20:51:25
+ */
+export default [
   {
     path: '/',
     component: '../layouts/BlankLayout',
@@ -37,8 +45,27 @@
               {
                 name: 'analysis',
                 icon: 'smile',
-                path: '/dashboard',
-                component: './MainPage',
+                path: '/',
+                component: './Dashboard',
+              },
+              {
+                path: '/goods',
+                name: 'goods',
+                icon: 'crown',
+                routes: [
+                  {
+                    name: '商品列表',
+                    icon: 'smile',
+                    path: '/goods/goodstypelist',
+                    component: './GoodsTypeList',
+                  },             
+                  {
+                    name: '添加商品',
+                    icon: 'smile',
+                    path: '/goods/addgoodsform',
+                    component: './AddGoodsForm',
+                  },
+                ]
               },
               {
                 path: '/accounts',
@@ -60,16 +87,6 @@
                 ],
               },
               {
-                path: '/',
-                component: './Welcome',
-              },
-              {
-                path: '/welcome',
-                name: 'welcome',
-                icon: 'smile',
-                component: './Welcome',
-              },
-              {
                 path: '/admin',
                 name: 'admin',
                 icon: 'crown',
@@ -80,7 +97,6 @@
                     path: '/admin/sub-page',
                     name: 'sub-page',
                     icon: 'smile',
-                    component: './Welcome',
                     authority: ['admin'],
                   },
                 ],
@@ -113,12 +129,6 @@
                     icon: 'smile',
                     path: '/shop/commentslist',
                     component: './CommentsList',
-                  },
-                  {
-                    name: 'good-type-list',
-                    icon: 'smile',
-                    path: '/shop/goodstypelist',
-                    component: './GoodsTypeList',
                   },
                 ],
               },
