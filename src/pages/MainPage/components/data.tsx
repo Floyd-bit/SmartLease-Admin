@@ -14,6 +14,9 @@ const Data: React.FC<DataProps> = (props) => {
         backgroundColor: props.color ? props.color : '#36CFCB',
         width: '300px',
         height: '100px',
+        justifyContent: 'space-around',
+        paddingLeft: '20px',
+        paddingRight: '20px',
       }}
     >
       <div style={{ color: 'white', fontSize: '60px', marginLeft: '20px' }}>{props.icon}</div>
@@ -22,7 +25,6 @@ const Data: React.FC<DataProps> = (props) => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          marginLeft: '30px',
           marginBottom: '10px',
           alignItems: 'center',
         }}

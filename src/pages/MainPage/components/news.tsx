@@ -1,15 +1,16 @@
 import React from 'react';
 
-interface TableItem {
-  tableTitle: string;
-  number: number;
-}
-interface DetailProps {
-  title: string;
-  tableData: TableItem[];
+type NewsItem = {
+  icon: any;
+  user: string;
+  time: string;
+  order: string;
+};
+interface NewsProps {
+  newsData: NewsItem[];
 }
 
-const Detail: React.FC<DetailProps> = (props) => {
+const News: React.FC<NewsProps> = (props) => {
   return (
     <div
       style={{
@@ -22,14 +23,13 @@ const Detail: React.FC<DetailProps> = (props) => {
     >
       <div
         style={{
-          backgroundColor: '#d9d9d9',
           display: 'flex',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          height: '40px',
+          height: '60px',
         }}
       >
-        <div style={{ marginLeft: '20px', fontSize: '17px' }}>{props.title}</div>
+        <div style={{ marginLeft: '20px', fontSize: '17px' }}>动态</div>
       </div>
       {props.tableData.map((row) => {
         return (
@@ -39,9 +39,9 @@ const Detail: React.FC<DetailProps> = (props) => {
                 display: 'flex',
                 paddingLeft: '20px',
                 paddingRight: '30px',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-start',
                 alignItems: 'center',
-                height: '42px',
+                height: '80px',
                 borderBottom: '2px solid #D9D9D9',
               }}
             >
@@ -55,4 +55,4 @@ const Detail: React.FC<DetailProps> = (props) => {
   );
 };
 
-export default Detail;
+export default News;
