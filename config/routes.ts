@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-09 20:19:49
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-09 20:51:25
+ * @LastEditTime: 2021-07-10 09:55:03
  */
 export default [
   {
@@ -101,12 +101,14 @@ export default [
                   },
                 ],
               },
+              /*
               {
                 name: 'profile',
                 path: '/detail',
                 component: './OrderDetail',
                 hidden: true,
               },
+              */
               {
                 path: '/shop',
                 name: 'list',

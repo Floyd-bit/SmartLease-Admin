@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-09 20:49:32
+ * @LastEditTime: 2021-07-10 09:25:16
  */
 import { stringify } from 'querystring';
 import type { Reducer, Effect } from 'umi';
@@ -16,9 +16,11 @@ import { getPageQuery } from '@/utils/utils';
 import { message } from 'antd';
 
 export type StateType = {
-  status?: 'ok' | 'error';
+  // status?: 'ok' | 'error';
+  status?: string;
   type?: string;
   currentAuthority?: 'user' | 'guest' | 'admin';
+  // currentAuthority: 'admin';
 };
 
 export type LoginModelType = {
@@ -91,7 +93,7 @@ const Model: LoginModelType = {
     changeLoginStatus(state, { payload }) {
       // setAuthority(payload.currentAuthority);
       // 后端接口尚未完善
-      setAuthority("admin");
+      setAuthority('admin');
       return {
         ...state,
         // 与后台对接时改为message

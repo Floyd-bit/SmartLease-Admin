@@ -13,17 +13,26 @@ const genList = (current: number, pageSize: number) => {
       disabled: i % 6 === 0,
       href: 'https://ant.design',
       avatar: [
-        'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
-        'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
-      ][i % 2],
-      name: `TradeCode ${index}`,
+        'https://img0.baidu.com/it/u=1026016199,1338164578&fm=26&fmt=auto&gp=0.jpg',
+        'https://img0.baidu.com/it/u=2827775814,1323073950&fm=26&fmt=auto&gp=0.jpg',
+        'https://img2.baidu.com/it/u=3645405391,1166150684&fm=26&fmt=auto&gp=0.jpg',
+        'https://img1.baidu.com/it/u=1400688818,2590041533&fm=26&fmt=auto&gp=0.jpg',
+      ][i % 4],
+      name: [
+        '电脑显示器显示屏HDMI',
+        'R3摩托车 400CC双缸水冷',
+        '12+512G全新X12 pro官方旗舰',
+      ][i%3],
       owner: '曲丽丽',
-      desc: '这是一段描述',
+      desc: `${Math.floor(Math.random() * 100)}`,
       callNo: Math.floor(Math.random() * 1000),
       status: Math.floor(Math.random() * 10) % 4,
       updatedAt: new Date(),
       createdAt: new Date(),
       progress: Math.ceil(Math.random() * 100),
+      money: Math.floor(Math.random()*100),
+      no: index,
+      amount: Math.floor(Math.random()*1000),
     });
   }
   tableListDataSource.reverse();

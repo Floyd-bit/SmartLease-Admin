@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-05 17:23:57
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-10 09:45:03
+ */
 export default {
   'pages.layouts.userLayout.title': '智能化共享租赁平台',
   'pages.login.accountLogin.tab': '账户密码登录',
@@ -27,18 +35,18 @@ export default {
   'pages.admin.subPage.title': ' 这个页面只有 admin 权限才能查看',
   'pages.admin.subPage.alertMessage': 'umi ui 现已发布，欢迎使用 npm run ui 启动体验。',
   'pages.searchTable.createForm.newRule': '新建规则',
-  'pages.searchTable.updateForm.ruleConfig': '规则配置',
+  'pages.searchTable.updateForm.ruleConfig': '编辑租品',
   'pages.searchTable.updateForm.basicConfig': '基本信息',
   'pages.searchTable.updateForm.ruleName.nameLabel': '商品名称',
   'pages.searchTable.updateForm.ruleName.nameRules': '请输入商品名称！',
-  'pages.searchTable.updateForm.ruleDesc.descLabel': '规则描述',
+  'pages.searchTable.updateForm.ruleDesc.descLabel': '商品信息',
   'pages.searchTable.updateForm.ruleDesc.descPlaceholder': '请输入至少五个字符',
   'pages.searchTable.updateForm.ruleDesc.descRules': '请输入至少五个字符的规则描述！',
-  'pages.searchTable.updateForm.ruleProps.title': '配置规则属性',
+  'pages.searchTable.updateForm.ruleProps.title': '配置租品属性',
   'pages.searchTable.updateForm.object': '监控对象',
   'pages.searchTable.updateForm.ruleProps.templateLabel': '规则模板',
   'pages.searchTable.updateForm.ruleProps.typeLabel': '规则类型',
-  'pages.searchTable.updateForm.schedulingPeriod.title': '设定调度周期',
+  'pages.searchTable.updateForm.schedulingPeriod.title': '设定上架时间',
   'pages.searchTable.updateForm.schedulingPeriod.timeLabel': '开始时间',
   'pages.searchTable.updateForm.schedulingPeriod.timeRules': '请选择开始时间！',
   'pages.searchTable.titleDesc': '价格/运费',
@@ -48,9 +56,9 @@ export default {
   'pages.searchTable.titleStatus': '是否上架',
   'pages.searchTable.amount': '库存',
   'pages.searchTable.money': '押金',
-  'pages.searchTable.nameStatus.default': '关闭',
-  'pages.searchTable.nameStatus.running': '运行中',
-  'pages.searchTable.nameStatus.online': '已上线',
+  'pages.searchTable.nameStatus.default': '正常',
+  'pages.searchTable.nameStatus.running': '已下架',
+  'pages.searchTable.nameStatus.online': '已上架',
   'pages.searchTable.nameStatus.abnormal': '异常',
   'pages.searchTable.titleUpdatedAt': '加入时间',
   'pages.searchTable.exception': '请输入异常原因！',

@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 11:20:47
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-09 20:49:58
+ * @LastEditTime: 2021-07-10 09:49:58
  */
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, message, Input, Drawer ,Tabs} from 'antd';
@@ -20,6 +20,7 @@ import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
 import type { TableListItem } from './data';
 import { queryRule, updateRule, addRule, removeRule } from './service';
+import { toUpper } from 'lodash';
 
 const { TabPane } = Tabs;
 /**
@@ -123,6 +124,11 @@ const GoodsTypeList: React.FC = () => {
       title: <FormattedMessage id="pages.searchTable.no" defaultMessage="Description" />,
       dataIndex: 'no',
       valueType: 'textarea',
+    },
+    {
+      dataIndex: 'avatar',
+      valueType: 'avatar',
+      hideInSearch: true,
     },
     // 商品名称
     {
@@ -303,7 +309,8 @@ const GoodsTypeList: React.FC = () => {
             type="primary"
             key="primary"
             onClick={() => {
-              handleModalVisible(true);
+             // handleModalVisible(true);
+             window.location.href = 'addgoodsform';
             }}
           >
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="New" />

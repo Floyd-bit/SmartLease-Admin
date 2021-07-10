@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-05 10:45:55
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-10 09:14:28
+ */
 import { reloadAuthorized } from './Authorized';
 
 // use localStorage to store the authority info, which might be sent from server in actual project.

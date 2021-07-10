@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 17:23:57
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-09 20:50:29
+ * @LastEditTime: 2021-07-10 09:42:54
  */
 import {
   AlipayCircleOutlined,
@@ -254,7 +254,7 @@ const Login: React.FC<LoginProps> = (props) => {
                   return;
                 }
                 message.success(
-                  'Get the verification code successfully! The verification code is: 1234',
+                  '获取验证码成功，验证码是1234',
                 );
               }}
             />

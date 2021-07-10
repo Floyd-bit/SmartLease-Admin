@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 17:23:57
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-09 20:50:47
+ * @LastEditTime: 2021-07-10 08:38:13
  */
 import { Form, Button, Col, Input, Popover, Progress, Row, Select, message } from 'antd';
 import type { FC } from 'react';
@@ -80,7 +80,7 @@ const UserRegister: FC<UserRegisterProps> = ({
     }
     const account = form.getFieldValue('mobile');
     // 与后台对接改为'创建成功'
-    if (userRegister.status === 'ok') {
+    if (userRegister.status === '创建成功') {
       message.success('注册成功！');
       history.push({
         pathname: '/user/userregisterresult',
