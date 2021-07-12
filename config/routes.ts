@@ -1,10 +1,10 @@
-﻿/*
+/*
  * @Description:
  * @version: 1.0
  * @Author: 赵卓轩
  * @Date: 2021-07-09 20:19:49
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-10 09:55:03
+ * @LastEditTime: 2021-07-12 10:05:58
  */
 export default [
   {
@@ -54,18 +54,31 @@ export default [
                 icon: 'crown',
                 routes: [
                   {
-                    name: '商品列表',
+                    name: 'goodsTypeList',
                     icon: 'smile',
                     path: '/goods/goodstypelist',
                     component: './GoodsTypeList',
                   },
                   {
-                    name: '添加商品',
+                    name: 'addgoods',
                     icon: 'smile',
                     path: '/goods/addgoodsform',
                     component: './AddGoodsForm',
                   },
                 ],
+              },
+              {
+                path: '/pictures',
+                name: 'pictures',
+                icon: 'crown',
+                routes: [
+                  {
+                    name: 'album',
+                    icon: 'smile',
+                    path: '/pictures/listsearchprojects',
+                    component: './ListSearchProjects',
+                  },
+                ]
               },
               {
                 path: '/accounts',
@@ -102,13 +115,13 @@ export default [
                 ],
               },
               /*
-              {
-                name: 'profile',
-                path: '/detail',
-                component: './OrderDetail',
-                hidden: true,
-              },
-              */
+      {
+        name: 'profile',
+        path: '/detail',
+        component: './OrderDetail',
+        hidden: true,
+      },
+      */
               {
                 path: '/shop',
                 name: 'list',

@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 11:20:47
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-10 09:49:58
+ * @LastEditTime: 2021-07-12 11:34:37
  */
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, message, Input, Drawer ,Tabs} from 'antd';
@@ -76,9 +76,10 @@ const handleUpdate = async (fields: FormValueType) => {
 const handleRemove = async (selectedRows: TableListItem[]) => {
   const hide = message.loading('Deleting');
   if (!selectedRows) return true;
+  // console.log(selectedRows.map((row) => row.key));
   try {
     await removeRule({
-      key: selectedRows.map((row) => row.key),
+      key: selectedRows.map((row) => row.id),
     });
     hide();
     message.success('Deleted successfully and will refresh soon');
@@ -122,11 +123,12 @@ const GoodsTypeList: React.FC = () => {
     // 商品编号
     {
       title: <FormattedMessage id="pages.searchTable.no" defaultMessage="Description" />,
-      dataIndex: 'no',
+      dataIndex: 'id',
       valueType: 'textarea',
+      hideInSearch: true,
     },
     {
-      dataIndex: 'avatar',
+      dataIndex: 'subImages',
       valueType: 'avatar',
       hideInSearch: true,
     },
@@ -138,7 +140,7 @@ const GoodsTypeList: React.FC = () => {
           defaultMessage="Rule name"
         />
       ),
-      dataIndex: 'name',
+      dataIndex: 'commodityName',
       tip: 'The rule name is the unique key',
       render: (dom, entity) => {
         return (
@@ -161,7 +163,7 @@ const GoodsTypeList: React.FC = () => {
           defaultMessage="Number of service calls"
         />
       ),
-      dataIndex: 'callNo',
+      dataIndex: 'tradeNumber',
       sorter: true,
       hideInForm: true,
       hideInSearch: true,
@@ -181,11 +183,11 @@ const GoodsTypeList: React.FC = () => {
     // 是否上架
     {
       title: <FormattedMessage id="pages.searchTable.titleStatus" defaultMessage="Status" />,
-      dataIndex: 'status',
+      dataIndex: 'commodityStatus',
       hideInForm: true,
       hideInSearch: true,
       valueEnum: {
-        0: {
+        'ONSALE': {
           text: (
             <FormattedMessage
               id="pages.searchTable.nameStatus.default"
@@ -194,19 +196,19 @@ const GoodsTypeList: React.FC = () => {
           ),
           status: 'Default',
         },
-        1: {
+        'y': {
           text: (
             <FormattedMessage id="pages.searchTable.nameStatus.running" defaultMessage="Running" />
           ),
           status: 'Processing',
         },
-        2: {
+        'x': {
           text: (
             <FormattedMessage id="pages.searchTable.nameStatus.online" defaultMessage="Online" />
           ),
           status: 'Success',
         },
-        3: {
+        'OFFSALE': {
           text: (
             <FormattedMessage
               id="pages.searchTable.nameStatus.abnormal"
@@ -220,7 +222,7 @@ const GoodsTypeList: React.FC = () => {
     // 库存
     {
       title: <FormattedMessage id="pages.searchTable.amount" defaultMessage="Description" />,
-      dataIndex: 'amount',
+      dataIndex: 'number',
       valueType: 'textarea',
       hideInSearch: true,
     },
@@ -233,8 +235,9 @@ const GoodsTypeList: React.FC = () => {
         />
       ),
       sorter: true,
-      dataIndex: 'updatedAt',
+      dataIndex: 'releaseTime',
       valueType: 'dateTime',
+      hideInSearch: true,
       renderFormItem: (item, { defaultRender, ...rest }, form) => {
         const status = form.getFieldValue('status');
         if (`${status}` === '0') {
@@ -257,7 +260,7 @@ const GoodsTypeList: React.FC = () => {
     // 押金 （元）
     {
       title: <FormattedMessage id="pages.searchTable.money" defaultMessage="Description" />,
-      dataIndex: 'money',
+      dataIndex: 'guaranteePrice',
       valueType: 'textarea',
       hideInSearch: true,
     },
@@ -277,6 +280,7 @@ const GoodsTypeList: React.FC = () => {
         <Button type="primary" danger icon={<DeleteOutlined/>} onClick={
           async () => {
             setSelectedRows([record]);
+            console.log(selectedRows.map((row) => row.key));
             await handleRemove(selectedRowsState);
             setSelectedRows([]);
             actionRef.current?.reloadAndRest?.();
@@ -316,7 +320,20 @@ const GoodsTypeList: React.FC = () => {
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="New" />
           </Button>,
         ]}
-        request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}
+        // request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}
+        request={
+          (params: any) => queryRule({ ...params }).then(response => {
+            const result = {
+              data: response.data.value.records.map((item:any,i:any) => {
+                return {
+                  ...item,
+                  key: i.toString(),
+                }
+              }),
+            }
+            return result;
+          })
+        } 
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => {
@@ -346,7 +363,7 @@ const GoodsTypeList: React.FC = () => {
         >
           <Button
             onClick={async () => {
-              console.log(selectedRowsState);
+              // console.log(selectedRowsState);
               await handleRemove(selectedRowsState);
               setSelectedRows([]);
               actionRef.current?.reloadAndRest?.();
@@ -428,15 +445,15 @@ const GoodsTypeList: React.FC = () => {
         }}
         closable={false}
       >
-        {currentRow?.name && (
+        {currentRow?.commodityName && (
           <ProDescriptions<TableListItem>
             column={2}
-            title={currentRow?.name}
+            title={currentRow?.commodityName}
             request={async () => ({
               data: currentRow || {},
             })}
             params={{
-              id: currentRow?.name,
+              id: currentRow?.commodityName,
             }}
             columns={columns as ProDescriptionsItemProps<TableListItem>[]}
           />

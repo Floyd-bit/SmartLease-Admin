@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-10 09:25:16
+ * @LastEditTime: 2021-07-10 15:10:34
  */
 import { stringify } from 'querystring';
 import type { Reducer, Effect } from 'umi';
@@ -91,9 +91,9 @@ const Model: LoginModelType = {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      // setAuthority(payload.currentAuthority);
+      setAuthority(payload.currentAuthority);
       // 后端接口尚未完善
-      setAuthority('admin');
+      // setAuthority('admin');
       return {
         ...state,
         // 与后台对接时改为message

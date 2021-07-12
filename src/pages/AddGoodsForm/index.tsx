@@ -22,7 +22,34 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
   });
 
   const onFinish = async (values: Record<string, any>) => {
-    run(values);
+    const status = values.commodityStatus?"ONSALE":"OFFSALE";
+    // const gid = values.id.praseInt();
+    const value = {
+      ...values,
+      commodityStatus: status,
+      attribute: {
+        additionalProp1: values.additionalProp1,
+        additionalProp2: values.additionalProp2,
+        additionalProp3: values.additionalProp3,
+      },
+      type: [values.type],
+      uniform: {
+        additionalProp1: [values.additionalProp4],
+        additionalProp2: [values.additionalProp5],
+      },
+      rentTime: '1',
+      number: 1,
+      score: 1,
+      storeId: 0,
+      storeName: '1',
+      subImages: '1',
+      tardingVolume: 0,
+      mark: 0,
+      guaranteePrice: 100,
+    };
+    
+    console.log(value);
+    run(value);
   };
 
   return (
@@ -51,7 +78,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           <ProFormText
             label="简略标题"
             width="xl"
-            name="goal"
+            name="commodityName"
             rules={[
               {
                 required: true,
@@ -63,7 +90,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           <ProForm.Group>
           <ProFormText
             label="商品编号"
-            name="title"
+            name="id"
             rules={[
               {
                 required: true,
@@ -74,7 +101,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           />
           <ProFormText
             label="产地"
-            name="title"
+            name="additionalProp1"
             rules={[
               {
                 required: true,
@@ -85,7 +112,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           />
           <ProFormText
             label="材质"
-            name="title"
+            name="additionalProp2"
             rules={[
               {
                 required: true,
@@ -96,7 +123,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           />
           <ProFormText
             label="品牌"
-            name="title"
+            name="additionalProp3"
             rules={[
               {
                 required: true,
@@ -109,7 +136,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           <ProForm.Group>
           <ProFormText
             label="产品重量"
-            name="title"
+            name="additionalProp4"
             rules={[
               {
                 required: true,
@@ -127,12 +154,12 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
                   },
                 ]}
                 width="xs"
-                name="useMode"
+                name="additionalProp5"
                 label="单位"
               />
           <ProFormText
             label="展示价格"
-            name="title"
+            name="rentPrice"
             rules={[
               {
                 required: true,
@@ -143,7 +170,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           />
           <ProFormText
             label="市场价格"
-            name="title"
+            name="additionalProp6"
             rules={[
               {
                 required: true,
@@ -156,7 +183,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           <ProFormText
             label="关键词"
             width="xl"
-            name="keywords"
+            name="type"
             rules={[
               {
                 required: true,
@@ -167,7 +194,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           />
           <ProFormTextArea
             label="内容概要"
-            name="standard"
+            name="subdescription"
             width="xl"
             rules={[
               {
@@ -179,12 +206,12 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           />
           <ProFormUploadDragger
             label="图片上传"
-            name="picture"
+            name="subImages"
             width="md"
           />
           <ProFormTextArea
             label="详细内容"
-            name="standard"
+            name="description"
             width="xl"
             rules={[
               {
@@ -195,7 +222,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           />
          <ProFormSwitch
           label="是否允许评论"
-          name="status"
+          name="commodityStatus"
          />
         </ProForm>
       </Card>

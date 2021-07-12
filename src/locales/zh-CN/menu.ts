@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-05 10:45:55
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-12 09:59:36
+ */
 export default {
   'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',
@@ -16,8 +24,10 @@ export default {
   'menu.exception.500': '500',
   'menu.form': '表单页',
   'menu.goods': '商品管理',
-  'menu.goodTypeList': '商品列表',
-  'menu.addgoods': '新增商品',
+  'menu.goods.goodsTypeList': '商品列表',
+  'menu.goods.addgoods': '新增商品',
+  'menu.pictures': '相册管理',
+  'menu.pictures.album': '相册列表',
   'menu.form.basic-form': '基础表单',
   'menu.form.step-form': '分步表单',
   'menu.form.step-form.info': '分步表单（填写转账信息）',
