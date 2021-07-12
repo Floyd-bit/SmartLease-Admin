@@ -4,28 +4,28 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 11:23:09
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-09 20:50:03
+ * @LastEditTime: 2021-07-12 11:22:18
  */
 export type TableListItem = {
   key: number;
   disabled?: boolean;
   href: string;
-  avatar: string; // 商品图片
-  no: string; // 商品编号
-  name: string; // 商品名称
+  subImages: string; // 商品图片
+  id: number; // 商品编号
+  commodityName: string; // 商品名称
   owner: string;
   desc: string;
-  callNo: number; // 交易量
-  status: number; // 是否上架
-  amount: number; // 库存
-  updatedAt: Date; // 加入时间
-  money: number; // 押金
+  tradeNumber: number; // 交易量
+  commodityStatus: string; // 是否上架
+  number: number; // 库存
+  releaseTime: Date; // 加入时间
+  guaranteePrice: number; // 押金
   createdAt: Date;
   progress: number;
 };
 
 export type TableListPagination = {
-  total: number;
+  totalPages: number;
   pageSize: number;
   current: number;
 };
