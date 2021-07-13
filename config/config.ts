@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-09 20:51:36
+ * @LastEditTime: 2021-07-13 13:44:51
  */
 // https://umijs.org/config/
 import { defineConfig } from 'umi';
@@ -17,6 +17,7 @@ const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   hash: true,
   antd: {},
+  mfsu: {},
   dva: {
     hmr: true,
   },

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Data from './components/data';
 import Detail from './components/detail';
 import Statistic from './components/statistic';
+import OrderColumn from './components/orderChart';
+import GoodsTable from './components/goodsTable';
+
 import {
   WalletOutlined,
   ShoppingCartOutlined,
@@ -9,13 +12,15 @@ import {
   UserAddOutlined,
 } from '@ant-design/icons';
 import { Col, Row } from 'antd';
-import { getItemData, getOrderChart, getOrderData, getSalesChart } from './service';
+import { getItemData, getOrderChart, getOrderColumnChart, getOrderData, getSalesChart } from './service';
+import goodsTable from './components/goodsTable';
 
 const MainPage: React.FC = () => {
   const [orderData, setOrderData] = useState([]);
   const [itemData, setItemData] = useState([]);
   const [orderChart, setOrderChart] = useState([]);
   const [salesChart, setSalesChart] = useState([]);
+  const [orderColumnChart, setOrderColumnChart] = useState([]);
   const [isInit, setIsInit] = useState(true);
   if (isInit) setIsInit(false);
   useEffect(() => {
@@ -23,6 +28,7 @@ const MainPage: React.FC = () => {
     getItemData().then((res) => setItemData(res.data));
     getOrderChart().then((res) => setOrderChart(res.data));
     getSalesChart().then((res) => setSalesChart(res.data));
+    getOrderColumnChart().then((res) => setOrderColumnChart(res.data));
   }, [isInit]);
 
   return (
@@ -51,7 +57,7 @@ const MainPage: React.FC = () => {
           <Data number="5683" description="今日访问量" icon={<EyeOutlined />} color="#42A7FF" />
         </Col>
       </Row>
-      <Row>
+      <Row justify="space-around">
         <Col span={12}>
           <Detail title="订单情况" tableData={orderData} />
         </Col>
@@ -63,6 +69,14 @@ const MainPage: React.FC = () => {
         </Col>
         <Col span={12}>
           <Statistic data={salesChart} title="销售统计" />
+        </Col>
+      </Row>
+      <Row align="middle">
+      <Col span={13}>
+          <OrderColumn  data={orderColumnChart} />
+        </Col>
+        <Col span={6} offset={4}>
+          <GoodsTable/>
         </Col>
       </Row>
     </>

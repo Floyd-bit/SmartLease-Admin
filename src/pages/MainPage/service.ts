@@ -4,6 +4,7 @@ const getOrderDataUrl = '/api/getOrderData';
 const getItemDataUrl = '/api/getItemData';
 const getOrderChartUrl = '/api/getOrderChart';
 const getSalesChartUrl = '/api/getSalesChart';
+const getOrderColumnChartUrl = '/api/getOrderColumnChart';
 
 export async function getOrderData() {
   return request(getOrderDataUrl, {
@@ -25,6 +26,12 @@ export async function getOrderChart() {
 
 export async function getSalesChart() {
   return request(getSalesChartUrl, {
+    method: 'GET',
+  });
+}
+
+export async function getOrderColumnChart() {
+  return request(getOrderColumnChartUrl, {
     method: 'GET',
   });
 }
