@@ -11,7 +11,7 @@ import {
   EyeOutlined,
   UserAddOutlined,
 } from '@ant-design/icons';
-import { Col, Row } from 'antd';
+import { Card, Col, Row } from 'antd';
 import { getItemData, getOrderChart, getOrderColumnChart, getOrderData, getSalesChart } from './service';
 import goodsTable from './components/goodsTable';
 
@@ -72,10 +72,10 @@ const MainPage: React.FC = () => {
         </Col>
       </Row>
       <Row align="middle">
-      <Col span={13}>
+      <Col span={16}>
           <OrderColumn  data={orderColumnChart} />
         </Col>
-        <Col span={6} offset={4}>
+        <Col span={6} offset={1}>
           <GoodsTable/>
         </Col>
       </Row>
