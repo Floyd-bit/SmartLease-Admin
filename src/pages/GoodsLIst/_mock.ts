@@ -147,6 +147,6 @@ function postFakeList(req: Request, res: Response) {
 }
 
 export default {
-  'GET  /api/fake_list': getFakeList,
-  'POST  /api/fake_list': postFakeList,
+  'GET  /apis/fake_list': getFakeList,
+  'POST  /apis/fake_list': postFakeList,
 };

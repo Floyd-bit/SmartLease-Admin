@@ -129,8 +129,8 @@ export const GoodsLIst: FC<GoodsLIstProps> = (props) => {
     <div className={styles.extraContent}>
       <RadioGroup defaultValue="all">
         <RadioButton value="all">全部</RadioButton>
-        <RadioButton value="progress">进行中</RadioButton>
-        <RadioButton value="waiting">等待中</RadioButton>
+        <RadioButton value="progress">未处理</RadioButton>
+        <RadioButton value="waiting">已处理</RadioButton>
       </RadioGroup>
       <Search className={styles.extraContentSearch} placeholder="请输入" onSearch={() => ({})} />
     </div>
@@ -190,10 +190,10 @@ export const GoodsLIst: FC<GoodsLIstProps> = (props) => {
           <Card bordered={false}>
             <Row>
               <Col sm={8} xs={24}>
-                <Info title="我的待办" value="8个任务" bordered />
+                <Info title="待处理" value="8个任务" bordered />
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="本周任务平均处理时间" value="32分钟" bordered />
+                <Info title="本周售后处理时间" value="32分钟" bordered />
               </Col>
               <Col sm={8} xs={24}>
                 <Info title="本周完成任务数" value="24个任务" />
@@ -204,7 +204,7 @@ export const GoodsLIst: FC<GoodsLIstProps> = (props) => {
           <Card
             className={styles.listCard}
             bordered={false}
-            title="商品列表"
+            title="售后列表"
             style={{ marginTop: 24 }}
             bodyStyle={{ padding: '0 32px 40px 32px' }}
             extra={extraContent}

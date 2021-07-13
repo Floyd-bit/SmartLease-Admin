@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 11:20:47
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-13 10:01:04
+ * @LastEditTime: 2021-07-13 15:14:17
  */
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, message, Input, Drawer ,Tabs} from 'antd';
@@ -309,6 +309,7 @@ const GoodsTypeList: React.FC = () => {
           labelWidth: 120,
         }}
         toolBarRender={() => [
+          // 新增商品
           <Button
             type="primary"
             key="primary"
@@ -317,7 +318,7 @@ const GoodsTypeList: React.FC = () => {
              window.location.href = 'addgoodsform';
             }}
           >
-            <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="New" />
+            <PlusOutlined />新增
           </Button>,
         ]}
         // request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}

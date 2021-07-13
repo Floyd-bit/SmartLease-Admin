@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-09 20:19:49
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-12 10:05:58
+ * @LastEditTime: 2021-07-13 16:15:49
  */
 export default [
   {
@@ -78,7 +78,7 @@ export default [
                     path: '/pictures/listsearchprojects',
                     component: './ListSearchProjects',
                   },
-                ]
+                ],
               },
               {
                 path: '/accounts',
@@ -86,16 +86,16 @@ export default [
                 icon: 'crown',
                 routes: [
                   {
-                    name: 'settings',
+                    name: 'shop',
                     icon: 'smile',
-                    path: '/accounts/accountsettings',
-                    component: './AccountSettings',
+                    path: '/accounts/shop',
+                    component: './ShopCenter',
                   },
                   {
-                    path: '/accounts/account',
-                    name: 'center',
+                    name: 'myshop',
                     icon: 'smile',
-                    component: './AccountCenter',
+                    path: '/accounts/myshop',
+                    component: './Shop',
                   },
                 ],
               },
@@ -114,14 +114,19 @@ export default [
                   },
                 ],
               },
-              /*
-      {
-        name: 'profile',
-        path: '/detail',
-        component: './OrderDetail',
-        hidden: true,
-      },
-      */
+              {
+                path: '/transport',
+                name: 'transport',
+                icon: 'crown',
+                routes: [
+                  {
+                    name: 'addtemplate',
+                    path: '/transport/addtemplate',
+                    icon: 'smile',
+                    component: 'AddLogistics',
+                  }
+                ]             
+              },
               {
                 path: '/shop',
                 name: 'list',
@@ -134,10 +139,10 @@ export default [
                     component: './TableList',
                   },
                   {
-                    name: 'basic-list',
+                    name: 'afterlist',
                     icon: 'smile',
-                    path: '/shop/goodslist',
-                    component: './GoodsLIst',
+                    path: '/shop/afterlist',
+                    component: './GoodsList',
                   },
                   {
                     name: 'search-list',

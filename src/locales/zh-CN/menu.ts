@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-12 09:59:36
+ * @LastEditTime: 2021-07-13 16:16:13
  */
 export default {
   'menu.welcome': '欢迎',
@@ -37,7 +37,7 @@ export default {
   'menu.list': '商家页',
   'menu.list.table-list': '订单管理',
   'menu.list.good-type-list': '商品类型管理',
-  'menu.list.basic-list': '商品管理',
+  'menu.list.afterlist': '售后管理',
   'menu.list.card-list': '卡片列表',
   'menu.list.search-list': '评论管理',
   'menu.list.search-list.articles': '搜索列表（文章）',
@@ -54,13 +54,15 @@ export default {
   'menu.exception.not-find': '404',
   'menu.exception.server-error': '500',
   'menu.exception.trigger': '触发错误',
-  'menu.account': '个人页',
-  'menu.account.center': '个人中心',
-  'menu.account.settings': '个人设置',
+  'menu.account': '商铺管理',
+  'menu.account.shop': '申请商铺',
+  'menu.account.myshop': '我的商铺',
   'menu.account.trigger': '触发报错',
   'menu.account.logout': '退出登录',
   'menu.editor': '图形编辑器',
   'menu.editor.flow': '流程编辑器',
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
+  'menu.transport': '物流管理',
+  'menu.transport.addtemplate': '运费模板',
 };

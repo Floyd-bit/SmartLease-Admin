@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-06 10:18:02
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-13 15:25:00
+ */
 import type { Effect, Reducer } from 'umi';
 import { addFakeList, queryFakeList, removeFakeList, updateFakeList } from './service';
 
