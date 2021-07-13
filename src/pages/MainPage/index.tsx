@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Data from './components/data';
 import Detail from './components/detail';
 import Statistic from './components/statistic';
@@ -9,281 +9,22 @@ import {
   UserAddOutlined,
 } from '@ant-design/icons';
 import { Col, Row } from 'antd';
+import { getItemData, getOrderChart, getOrderData, getSalesChart } from './service';
 
 const MainPage: React.FC = () => {
-  const StatisticTableData = [
-    {
-      Date: '2010-01',
-      income: 1998,
-    },
-    {
-      Date: '2010-02',
-      income: 1850,
-    },
-    {
-      Date: '2010-03',
-      income: 1720,
-    },
-    {
-      Date: '2010-04',
-      income: 1818,
-    },
-    {
-      Date: '2010-05',
-      income: 1920,
-    },
-    {
-      Date: '2010-06',
-      income: 1802,
-    },
-    {
-      Date: '2010-07',
-      income: 1945,
-    },
-    {
-      Date: '2010-08',
-      income: 1856,
-    },
-    {
-      Date: '2010-09',
-      income: 2107,
-    },
-    {
-      Date: '2010-10',
-      income: 2140,
-    },
-    {
-      Date: '2010-11',
-      income: 2311,
-    },
-    {
-      Date: '2010-12',
-      income: 1972,
-    },
-    {
-      Date: '2011-01',
-      income: 1760,
-    },
-    {
-      Date: '2011-02',
-      income: 1824,
-    },
-    {
-      Date: '2011-03',
-      income: 1801,
-    },
-    {
-      Date: '2011-04',
-      income: 2001,
-    },
-    {
-      Date: '2011-05',
-      income: 1640,
-    },
-    {
-      Date: '2011-06',
-      income: 1502,
-    },
-    {
-      Date: '2011-07',
-      income: 1621,
-    },
-    {
-      Date: '2011-08',
-      income: 1480,
-    },
-    {
-      Date: '2011-09',
-      income: 1549,
-    },
-    {
-      Date: '2011-10',
-      income: 1390,
-    },
-    {
-      Date: '2011-11',
-      income: 1325,
-    },
-    {
-      Date: '2011-12',
-      income: 1250,
-    },
-    {
-      Date: '2012-01',
-      income: 1394,
-    },
-    {
-      Date: '2012-02',
-      income: 1406,
-    },
-    {
-      Date: '2012-03',
-      income: 1578,
-    },
-    {
-      Date: '2012-04',
-      income: 1465,
-    },
-  ];
+  const [orderData, setOrderData] = useState([]);
+  const [itemData, setItemData] = useState([]);
+  const [orderChart, setOrderChart] = useState([]);
+  const [salesChart, setSalesChart] = useState([]);
+  const [isInit, setIsInit] = useState(true);
+  if (isInit) setIsInit(false);
+  useEffect(() => {
+    getOrderData().then((res) => setOrderData(res.data));
+    getItemData().then((res) => setItemData(res.data));
+    getOrderChart().then((res) => setOrderChart(res.data));
+    getSalesChart().then((res) => setSalesChart(res.data));
+  }, [isInit]);
 
-  const StatisticTableData2 = [
-    {
-      Date: '2010-01',
-      income: 1231,
-    },
-    {
-      Date: '2010-02',
-      income: 1123,
-    },
-    {
-      Date: '2010-03',
-      income: 832,
-    },
-    {
-      Date: '2010-04',
-      income: 1818,
-    },
-    {
-      Date: '2010-05',
-      income: 589,
-    },
-    {
-      Date: '2010-06',
-      income: 1002,
-    },
-    {
-      Date: '2010-07',
-      income: 1230,
-    },
-    {
-      Date: '2010-08',
-      income: 1400,
-    },
-    {
-      Date: '2010-09',
-      income: 2107,
-    },
-    {
-      Date: '2010-10',
-      income: 2402,
-    },
-    {
-      Date: '2010-11',
-      income: 2311,
-    },
-    {
-      Date: '2010-12',
-      income: 1902,
-    },
-    {
-      Date: '2011-01',
-      income: 1760,
-    },
-    {
-      Date: '2011-02',
-      income: 1824,
-    },
-    {
-      Date: '2011-03',
-      income: 1801,
-    },
-    {
-      Date: '2011-04',
-      income: 2001,
-    },
-    {
-      Date: '2011-05',
-      income: 1509,
-    },
-    {
-      Date: '2011-06',
-      income: 1422,
-    },
-    {
-      Date: '2011-07',
-      income: 1621,
-    },
-    {
-      Date: '2011-08',
-      income: 1480,
-    },
-    {
-      Date: '2011-09',
-      income: 1549,
-    },
-    {
-      Date: '2011-10',
-      income: 1390,
-    },
-    {
-      Date: '2011-11',
-      income: 1325,
-    },
-    {
-      Date: '2011-12',
-      income: 1250,
-    },
-    {
-      Date: '2012-01',
-      income: 1394,
-    },
-    {
-      Date: '2012-02',
-      income: 1406,
-    },
-    {
-      Date: '2012-03',
-      income: 1578,
-    },
-    {
-      Date: '2012-04',
-      income: 1465,
-    },
-  ];
-  const DetailData = [
-    {
-      tableTitle: '待支付订单',
-      number: 0,
-    },
-    {
-      tableTitle: '代发货订单',
-      number: 10,
-    },
-    {
-      tableTitle: '待收货订单',
-      number: 13,
-    },
-    {
-      tableTitle: '待支付订单',
-      number: 26,
-    },
-    {
-      tableTitle: '交易失败',
-      number: 30,
-    },
-  ];
-  const DetailData2 = [
-    {
-      tableTitle: '待审核商品',
-      number: 120,
-    },
-    {
-      tableTitle: '库存警告商品',
-      number: 34,
-    },
-    {
-      tableTitle: '上架商品',
-      number: 23,
-    },
-    {
-      tableTitle: '下架商品',
-      number: 46,
-    },
-    {
-      tableTitle: '商品评论',
-      number: 20,
-    },
-  ];
   return (
     <>
       <Row>
@@ -312,16 +53,16 @@ const MainPage: React.FC = () => {
       </Row>
       <Row>
         <Col span={12}>
-          <Detail title="订单情况" tableData={DetailData} />
+          <Detail title="订单情况" tableData={orderData} />
         </Col>
         <Col span={12}>
-          <Statistic data={StatisticTableData} title="订单统计" />
+          <Statistic data={orderChart} title="订单统计" />
         </Col>
         <Col span={12}>
-          <Detail title="商品情况" tableData={DetailData2} />
+          <Detail title="商品情况" tableData={itemData} />
         </Col>
         <Col span={12}>
-          <Statistic data={StatisticTableData2} title="销售统计" />
+          <Statistic data={salesChart} title="销售统计" />
         </Col>
       </Row>
     </>
