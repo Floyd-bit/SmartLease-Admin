@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-12 08:40:50
+ * @LastEditTime: 2021-07-13 09:41:41
  */
 /**
  * 在生产环境 代理是无法生效的，所以这里没有生产环境的配置
@@ -27,6 +27,12 @@ export default {
       // target: 'http://localhost:8081/',
       changeOrigin: true,
       pathRewrite: { '^/api2': '' },
+    },
+    '/api3/api': {
+      target: 'http://47.110.156.20:10001/',
+      // target: 'http://localhost:8081/',
+      changeOrigin: true,
+      pathRewrite: { '^/api3': '' },
     },
   },
   test: {

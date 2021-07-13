@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 11:20:47
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-12 11:34:37
+ * @LastEditTime: 2021-07-13 10:01:04
  */
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, message, Input, Drawer ,Tabs} from 'antd';
@@ -280,7 +280,7 @@ const GoodsTypeList: React.FC = () => {
         <Button type="primary" danger icon={<DeleteOutlined/>} onClick={
           async () => {
             setSelectedRows([record]);
-            console.log(selectedRows.map((row) => row.key));
+            // console.log(selectedRows.map((row) => row.key));
             await handleRemove(selectedRowsState);
             setSelectedRows([]);
             actionRef.current?.reloadAndRest?.();

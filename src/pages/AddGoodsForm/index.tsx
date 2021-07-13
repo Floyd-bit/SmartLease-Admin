@@ -1,17 +1,28 @@
-import { Card, message } from 'antd';
+/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-09 11:24:06
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-13 10:38:07
+ */
+import { Button, Card, message } from 'antd';
 import ProForm, {
   ProFormSelect,
   ProFormSwitch,
   ProFormText,
   ProFormTextArea,
+  ProFormUploadButton,
   ProFormUploadDragger,
 } from '@ant-design/pro-form';
 import { useRequest } from 'umi';
 import type { FC } from 'react';
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { fakeSubmitForm } from './service';
+import { fakeSubmitForm, uploadFile } from './service';
 import styles from './style.less';
+import axios from 'axios';
+import { result } from 'lodash';
 
 const AddGoodsForm: FC<Record<string, any>> = () => {
   const { run } = useRequest(fakeSubmitForm, {
@@ -21,7 +32,43 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
     },
   });
 
+    // 将base64转换为文件
+    const dataURLtoFile = (dataurl, filename) => { 
+	    const arr = dataurl.split(',');
+	    const mime = arr[0].match(/:(.*?);/)[1];
+	    const bstr = atob(arr[1]);
+	    let n = bstr.length;
+	    const u8arr = new Uint8Array(n);
+	    while (n--) {
+	        u8arr[n] = bstr.charCodeAt(n);
+	    }
+	    return new File([u8arr], filename, { type: mime });
+	};  
+
+  const upload = (values: any) => {
+    // const file = dataURLtoFile(values[0], values[0].name);
+    // console.log("文件",file)
+    axios.post('/api3/api/file/upload', values[0],{
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+    })
+    .then(function (response) {
+      console.log(response.data.msg);
+        if(response.data.msg === "上传成功"){
+          let result = response.data.imgUrl;
+        }
+        else{
+          alert("上传失败");
+        }
+        return result;
+    })
+    .catch(err => console.log(err))
+  };
+
   const onFinish = async (values: Record<string, any>) => {
+    const file = upload(values.subImages);
+    console.log(file);
     const status = values.commodityStatus?"ONSALE":"OFFSALE";
     // const gid = values.id.praseInt();
     const value = {
@@ -42,12 +89,11 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
       score: 1,
       storeId: 0,
       storeName: '1',
-      subImages: '1',
+      subImages: file,
       tardingVolume: 0,
       mark: 0,
       guaranteePrice: 100,
-    };
-    
+    };    
     console.log(value);
     run(value);
   };
@@ -207,7 +253,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           <ProFormUploadDragger
             label="图片上传"
             name="subImages"
-            width="md"
+            width='md'
           />
           <ProFormTextArea
             label="详细内容"
@@ -225,6 +271,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           name="commodityStatus"
          />
         </ProForm>
+        <Button onClick={onFinish}>测试</Button>
       </Card>
     </PageContainer>
   );
