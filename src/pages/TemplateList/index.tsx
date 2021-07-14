@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 11:20:47
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-14 11:01:04
+ * @LastEditTime: 2021-07-14 11:34:03
  */
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, message, Input, Drawer ,Tabs} from 'antd';
@@ -95,7 +95,7 @@ function callback(key) {
   console.log(key);
 }
 
-const GoodsTypeList: React.FC = () => {
+const TemplateList: React.FC = () => {
   /**
    * @en-US Pop-up window of new window
    * @zh-CN 新建窗口的弹窗
@@ -120,27 +120,17 @@ const GoodsTypeList: React.FC = () => {
   const intl = useIntl();
 
   const columns: ProColumns<TableListItem>[] = [
-    // 商品编号
+    // 编号
     {
       title: <FormattedMessage id="pages.searchTable.no" defaultMessage="Description" />,
       dataIndex: 'id',
       valueType: 'textarea',
       hideInSearch: true,
     },
+    // 模板名称
     {
-      dataIndex: 'subImages',
-      valueType: 'avatar',
-      hideInSearch: true,
-    },
-    // 商品名称
-    {
-      title: (
-        <FormattedMessage
-          id="pages.searchTable.updateForm.ruleName.nameLabel"
-          defaultMessage="Rule name"
-        />
-      ),
-      dataIndex: 'commodityName',
+      title: '模板名称',
+      dataIndex: 'templateName',
       tip: 'The rule name is the unique key',
       render: (dom, entity) => {
         return (
@@ -155,74 +145,44 @@ const GoodsTypeList: React.FC = () => {
         );
       },
     },
-    // 交易量
+    // 计费模板
     {
-      title: (
-        <FormattedMessage
-          id="pages.searchTable.titleCallNo"
-          defaultMessage="Number of service calls"
-        />
-      ),
-      dataIndex: 'tradeNumber',
-      sorter: true,
-      hideInForm: true,
-      hideInSearch: true,
-      renderText: (val: string) =>
-        `${val}${intl.formatMessage({
-          id: 'pages.searchTable.tenThousand',
-          defaultMessage: ' 万 ',
-        })}`,
-    },
-    // 价格/运费
-    {
-      title: <FormattedMessage id="pages.searchTable.titleDesc" defaultMessage="Description" />,
-      dataIndex: 'desc',
-      valueType: 'textarea',
-      hideInSearch: true,
-    },
-    // 是否上架
-    {
-      title: <FormattedMessage id="pages.searchTable.titleStatus" defaultMessage="Status" />,
-      dataIndex: 'commodityStatus',
+      title: '计费模板',
+      dataIndex: 'chargeMode',
       hideInForm: true,
       hideInSearch: true,
       valueEnum: {
-        'ONSALE': {
-          text: (
-            <FormattedMessage
-              id="pages.searchTable.nameStatus.default"
-              defaultMessage="Shut down"
-            />
-          ),
+        'BYPIECE' : {
+          text: '按件计费',
           status: 'Default',
         },
-        'y': {
-          text: (
-            <FormattedMessage id="pages.searchTable.nameStatus.running" defaultMessage="Running" />
-          ),
+        '' : {
+          text: 'xxx',
           status: 'Processing',
-        },
-        'x': {
-          text: (
-            <FormattedMessage id="pages.searchTable.nameStatus.online" defaultMessage="Online" />
-          ),
-          status: 'Success',
-        },
-        'OFFSALE': {
-          text: (
-            <FormattedMessage
-              id="pages.searchTable.nameStatus.abnormal"
-              defaultMessage="Abnormal"
-            />
-          ),
-          status: 'Error',
         },
       },
     },
-    // 库存
+    // 是否上架
     {
-      title: <FormattedMessage id="pages.searchTable.amount" defaultMessage="Description" />,
-      dataIndex: 'number',
+      title: '是否使用',
+      dataIndex: 'isUsing',
+      hideInForm: true,
+      hideInSearch: true,
+      valueEnum: {
+        true : {
+          text: '正在使用',
+          status: 'Default',
+        },
+        false : {
+          text: '未使用',
+          status: 'Processing',
+        },
+      },
+    },
+    // 排名
+    {
+      title: '排名',
+      dataIndex: 'rank',
       valueType: 'textarea',
       hideInSearch: true,
     },
@@ -235,7 +195,7 @@ const GoodsTypeList: React.FC = () => {
         />
       ),
       sorter: true,
-      dataIndex: 'releaseTime',
+      dataIndex: 'createTime',
       valueType: 'dateTime',
       hideInSearch: true,
       renderFormItem: (item, { defaultRender, ...rest }, form) => {
@@ -256,13 +216,6 @@ const GoodsTypeList: React.FC = () => {
         }
         return defaultRender(item);
       },
-    },
-    // 押金 （元）
-    {
-      title: <FormattedMessage id="pages.searchTable.money" defaultMessage="Description" />,
-      dataIndex: 'guaranteePrice',
-      valueType: 'textarea',
-      hideInSearch: true,
     },
     // 操作
     {
@@ -292,16 +245,6 @@ const GoodsTypeList: React.FC = () => {
 
   return (
     <PageContainer>
-        <Tabs defaultActiveKey="1" onChange={callback}>
-          <TabPane tab="商品列表" key="1">
-          </TabPane>
-          <TabPane tab="上架商品" key="2">
-          </TabPane>
-          <TabPane tab="下架商品" key="3">
-          </TabPane>
-          <TabPane tab="商品回收站" key="4">
-          </TabPane>
-        </Tabs>
       <ProTable<TableListItem>
         actionRef={actionRef}
         rowKey="key"
@@ -315,7 +258,7 @@ const GoodsTypeList: React.FC = () => {
             key="primary"
             onClick={() => {
              // handleModalVisible(true);
-             window.location.href = 'addgoodsform';
+             window.location.href = 'addTemplate';
             }}
           >
             <PlusOutlined />新增
@@ -325,7 +268,7 @@ const GoodsTypeList: React.FC = () => {
         request={
           (params: any) => queryRule({ ...params }).then(response => {
             const result = {
-              data: response.data.value.records.map((item:any,i:any) => {
+              data: response.data.value.map((item:any,i:any) => {
                 return {
                   ...item,
                   key: i.toString(),
@@ -446,15 +389,15 @@ const GoodsTypeList: React.FC = () => {
         }}
         closable={false}
       >
-        {currentRow?.commodityName && (
+        {currentRow?.templateName && (
           <ProDescriptions<TableListItem>
             column={2}
-            title={currentRow?.commodityName}
+            title={currentRow?.templateName}
             request={async () => ({
               data: currentRow || {},
             })}
             params={{
-              id: currentRow?.commodityName,
+              id: currentRow?.templateName,
             }}
             columns={columns as ProDescriptionsItemProps<TableListItem>[]}
           />
@@ -464,4 +407,4 @@ const GoodsTypeList: React.FC = () => {
   );
 };
 
-export default GoodsTypeList;
+export default TemplateList;

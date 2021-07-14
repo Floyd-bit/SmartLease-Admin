@@ -4,20 +4,19 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 11:21:09
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-14 10:57:53
+ * @LastEditTime: 2021-07-14 10:57:29
  */
 import request from '@/utils/request';
 import type { TableListParams, TableListItem } from './data.d';
 
 export async function queryRule(params?: TableListParams) {
   console.log(params);
-  return request(`/api2/business/commodity/selectByStoreId?&page=${1}&size=${params?.pageSize}&storeId=1`
+  return request(`/api2/business/freightTemplate/selectByStoreId?storeId=1`
   );
 }
 
 export async function removeRule(params: { key: number[] }) {
-  console.log("参数",params.key);
-  return request(`/api2/business/commodity/deleteById?id=${params.key[0]}`, {
+  return request(`/api2/business/freightTemplate/deleteById?id=${params.key[0]}`, {
     method: 'DELETE',
     data: {
       ...params,

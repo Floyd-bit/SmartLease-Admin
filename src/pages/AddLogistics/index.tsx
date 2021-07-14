@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-13 15:54:05
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-13 16:25:43
+ * @LastEditTime: 2021-07-14 10:02:03
  */
 import { Card, message } from 'antd';
 import ProForm, {
@@ -29,7 +29,12 @@ const AddLogistics: FC<Record<string, any>> = () => {
   });
 
   const onFinish = async (values: Record<string, any>) => {
-    run(values);
+    const value = {
+      ...values,
+      createTime: new Date(),
+      storeId: 1
+    }
+    run(value);
   };
 
   return (
@@ -46,7 +51,7 @@ const AddLogistics: FC<Record<string, any>> = () => {
           <ProFormText
             width="md"
             label="模板名称"
-            name="title"
+            name="templateName"
             rules={[
               {
                 required: true,
@@ -62,6 +67,12 @@ const AddLogistics: FC<Record<string, any>> = () => {
           <ProFormSelect
             name="chargeMode"
             label="计费模式"
+            options={[
+              {
+                value: 'BYPIECE',
+                label: '按件计费',
+              },
+            ]}
           />
           <ProFormDigit
             label={
@@ -70,7 +81,7 @@ const AddLogistics: FC<Record<string, any>> = () => {
                 <em className={styles.optional}></em>
               </span>
             }
-            name="weight"
+            name="rank"
             placeholder="请输入"
             min={0}
             max={100}

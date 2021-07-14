@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-13 16:51:30
+ * @LastEditTime: 2021-07-14 15:15:51
  */
 /**
  * 在生产环境 代理是无法生效的，所以这里没有生产环境的配置
@@ -16,18 +16,22 @@
  */
 export default {
   dev: {
+    // 用户端接口
     '/api/': {
-      target: 'http://47.110.156.20:8085/',
-      // target: 'http://localhost:8081/',
+      // target: 'http://47.110.156.20:8085/',
+      target: 'http://jp-tyo-ilj-1.natfrp.cloud:38298/',
       changeOrigin: true,
       pathRewrite: { '^/api': '' },
     },
+    // 商家版接口
     '/api2': {
-      target: 'http://47.110.156.20:8083/',
-      // target: 'http://localhost:8081/',
+      // target: 'http://47.110.156.20:8083/',
+      // target: 'http://jp-tyo-ilj-1.natfrp.cloud:58379',
+      target: 'http://localhost:8083/',
       changeOrigin: true,
       pathRewrite: { '^/api2': '' },
     },
+    // 上传接口
     '/api3/api': {
       target: 'http://47.110.156.20:10001/',
       // target: 'http://localhost:8081/',

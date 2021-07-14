@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-06 10:19:08
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-14 15:53:53
+ */
 import type { Effect, Reducer } from 'umi';
 import type { ListItemDataType } from './data.d';
 import { queryFakeList } from './service';
@@ -28,17 +36,19 @@ const Model: ModelType = {
 
   effects: {
     *fetch({ payload }, { call, put }) {
+      // 调用获取评论接口
       const response = yield call(queryFakeList, payload);
+      console.log(response)
       yield put({
         type: 'queryList',
-        payload: Array.isArray(response) ? response : [],
+        payload: Array.isArray(response.data.value.records) ? response.data.value.records : [],
       });
     },
     *appendFetch({ payload }, { call, put }) {
       const response = yield call(queryFakeList, payload);
       yield put({
         type: 'appendList',
-        payload: Array.isArray(response) ? response : [],
+        payload: Array.isArray(response.data.vaule.records) ? response.data.value.records : [],
       });
     },
   },

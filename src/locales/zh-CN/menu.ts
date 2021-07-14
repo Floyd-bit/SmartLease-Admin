@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-13 16:16:13
+ * @LastEditTime: 2021-07-14 10:19:01
  */
 export default {
   'menu.welcome': '欢迎',
@@ -65,4 +65,5 @@ export default {
   'menu.editor.koni': '拓扑编辑器',
   'menu.transport': '物流管理',
   'menu.transport.addtemplate': '运费模板',
+  'menu.transport.templateList': '模板列表'
 };

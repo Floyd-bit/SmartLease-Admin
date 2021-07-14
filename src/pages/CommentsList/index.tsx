@@ -1,7 +1,23 @@
+/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-06 10:19:08
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-14 16:51:13
+ */
+/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-06 10:19:08
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-14 11:29:20
+ */
 import type { FC } from 'react';
 import React, { useEffect } from 'react';
 import { Button, Card, Col, Form, List, Row, Select, Tag } from 'antd';
-import { LoadingOutlined, StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
+import { LoadingOutlined, StarOutlined, LikeOutlined, MessageOutlined, WindowsOutlined } from '@ant-design/icons';
 import type { Dispatch } from 'umi';
 import { connect } from 'umi';
 import ArticleListContent from './components/ArticleListContent';
@@ -10,6 +26,7 @@ import type { ListItemDataType } from './data.d';
 import StandardFormRow from './components/StandardFormRow';
 import TagSelect from './components/TagSelect';
 import styles from './style.less';
+import axios from 'axios';
 
 const { Option } = Select;
 const FormItem = Form.Item;
@@ -31,7 +48,7 @@ const CommentsList: FC<CommentsListProps> = ({
     dispatch({
       type: 'commentsList/fetch',
       payload: {
-        count: 5,
+        size: 5,
       },
     });
   }, []);
@@ -45,7 +62,7 @@ const CommentsList: FC<CommentsListProps> = ({
     dispatch({
       type: 'commentsList/appendFetch',
       payload: {
-        count: pageSize,
+        size: pageSize,
       },
     });
   };
@@ -112,6 +129,21 @@ const CommentsList: FC<CommentsListProps> = ({
     },
   };
 
+  // 删除评论
+const  handleRemove = async (id: any) => {
+  axios.post(`api2/customer/user/login?id=${id}`)
+  .then(function (response) {
+      if(response.data.message === "删除成功"){
+        alert("删除成功");
+      }
+      else{
+        alert("删除失败");
+      }
+  })
+  .catch(err => console.log(err))
+}
+
+  // 加载更多
   const loadMore = list.length > 0 && (
     <div style={{ textAlign: 'center', marginTop: 16 }}>
       <Button onClick={fetchMore} style={{ paddingLeft: 48, paddingRight: 48 }}>
@@ -209,11 +241,13 @@ const CommentsList: FC<CommentsListProps> = ({
           loadMore={loadMore}
           dataSource={list}
           renderItem={(item) => (
+            <Row align="middle">
+              <Col span={16}>
             <List.Item
               key={item.id}
               actions={[
                 <IconText key="star" type="star-o" text={item.star} />,
-                <IconText key="like" type="like-o" text={item.like} />,
+                <IconText key="like" type="like-o" text={item.score} />,
                 <IconText key="message" type="message" text={item.message} />,
               ]}
               extra={<div className={styles.listItemExtra} />}
@@ -221,19 +255,26 @@ const CommentsList: FC<CommentsListProps> = ({
               <List.Item.Meta
                 title={
                   <a className={styles.listItemMetaTitle} href={item.href}>
-                    {item.title}
+                    {item.commodityName}
                   </a>
                 }
                 description={
                   <span>
-                    <Tag>Ant Design</Tag>
-                    <Tag>设计语言</Tag>
-                    <Tag>蚂蚁金服</Tag>
+                    <Tag>评论</Tag>
+                    <Tag>{item.commodityName}</Tag>
                   </span>
                 }
-              />
+              />            
               <ArticleListContent data={item} />
-            </List.Item>
+            </List.Item>   
+          </Col>   
+          <Col span={2}>
+            <Button>回复</Button>
+          </Col>
+          <Col span={2}>
+            <Button danger onClick={async () => {await handleRemove(item.id)}}>删除</Button>
+          </Col>
+            </Row>
           )}
         />
       </Card>

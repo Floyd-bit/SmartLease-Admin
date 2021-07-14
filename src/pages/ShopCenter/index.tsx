@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-13 14:46:43
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-13 14:55:20
+ * @LastEditTime: 2021-07-14 09:36:46
  */
 import { Card, message } from 'antd';
 import ProForm, {
@@ -32,7 +32,13 @@ const ShopCenter: FC<Record<string, any>> = () => {
   });
 
   const onFinish = async (values: Record<string, any>) => {
-    run(values);
+    const value = {
+      ...values,
+      creditScore: 100,
+      score: 100,
+      storeKeeperId: 1
+    }
+    run(value);
   };
 
   return (
@@ -54,7 +60,7 @@ const ShopCenter: FC<Record<string, any>> = () => {
           <ProFormText
             width="md"
             label="商铺名称"
-            name="title"
+            name="storeName"
             rules={[
               {
                 required: true,
@@ -66,7 +72,7 @@ const ShopCenter: FC<Record<string, any>> = () => {
           <ProFormTextArea
             label="商铺简介"
             width="xl"
-            name="goal"
+            name="introduction"
             rules={[
               {
                 required: true,

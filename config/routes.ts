@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-09 20:19:49
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-13 16:15:49
+ * @LastEditTime: 2021-07-14 10:13:34
  */
 export default [
   {
@@ -84,7 +84,7 @@ export default [
                 path: '/accounts',
                 name: 'account',
                 icon: 'crown',
-                routes: [
+                routes: [                
                   {
                     name: 'shop',
                     icon: 'smile',
@@ -95,7 +95,7 @@ export default [
                     name: 'myshop',
                     icon: 'smile',
                     path: '/accounts/myshop',
-                    component: './Shop',
+                    component: './MyShop',
                   },
                 ],
               },
@@ -124,6 +124,12 @@ export default [
                     path: '/transport/addtemplate',
                     icon: 'smile',
                     component: 'AddLogistics',
+                  },
+                  {
+                    name: 'templateList',
+                    path: '/transport/templateList',
+                    icon: 'smile',
+                    component: 'TemplateList'
                   }
                 ]             
               },
