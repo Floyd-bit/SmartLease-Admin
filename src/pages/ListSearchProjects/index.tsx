@@ -1,22 +1,54 @@
-import { Card, Col, Form, List, Row, Select, Typography } from 'antd';
-import moment from 'moment';
+/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-12 09:45:04
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-15 11:57:48
+ */
+import { Card, Col, Form, List, Row, Select, Button, Modal , Image} from 'antd';
+import React, { useState } from 'react';
 import type { FC } from 'react';
-import React from 'react';
 import { useRequest } from 'umi';
-import AvatarList from './components/AvatarList';
 import StandardFormRow from './components/StandardFormRow';
 import TagSelect from './components/TagSelect';
 import type { ListItemDataType } from './data.d';
 import { queryFakeList } from './service';
 import styles from './style.less';
+import axios from 'axios';
+import Item from 'antd/lib/list/Item';
 
 const { Option } = Select;
 const FormItem = Form.Item;
-const { Paragraph } = Typography;
 
 const getKey = (id: string, index: number) => `${id}-${index}`;
 
 const ListSearchProjects: FC = () => {
+const [isModalVisible, setIsModalVisible] = useState(false);
+const [pictureId, setPictureId] = useState(0);
+const [pictureArray, setPictureArray] = useState([]);
+
+const getPictures = (value: any) => {
+  axios.get(`/api2/business/album/selectById?id=${value}`)
+  .then(function (response) {
+    setPictureArray(response.data.data.value.pictures);
+  })
+  .catch(err => console.log(err))
+};
+
+const showModal = (id) => {
+  getPictures(id);
+  setIsModalVisible(true);
+};
+
+const handleOk = () => {
+  setIsModalVisible(false);
+};
+
+const handleCancel = () => {
+  setIsModalVisible(false);
+};
+  // 获取后台数据
   const { data, loading, run } = useRequest((values: any) => {
     console.log('form data', values);
     return queryFakeList({
@@ -24,8 +56,10 @@ const ListSearchProjects: FC = () => {
     });
   });
 
-  const list = data?.list || [];
+  // 渲染数据
+  const list = data?.value || [];
 
+  // 相册列表
   const cardList = list && (
     <List<ListItemDataType>
       rowKey="id"
@@ -42,17 +76,17 @@ const ListSearchProjects: FC = () => {
       dataSource={list}
       renderItem={(item) => (
         <List.Item>
-          <Card className={styles.card} hoverable cover={<img alt={item.title} src={item.cover} />}>
+          <Card className={styles.card} hoverable cover={<img alt={item.name} src={item.pictures[0]} />}>
             <Card.Meta
-              title={<a>{item.title}</a>}
-              description={
-                <Paragraph className={styles.item} ellipsis={{ rows: 2 }}>
-                  {item.subDescription}
-                </Paragraph>
-              }
+              title={<a>{item.name}</a>}
             />
             <div className={styles.cardItemContent}>
-              <span>{moment(item.updatedAt).fromNow()}</span>
+            <Button type="primary" onClick={() => {
+              setPictureId(item.id);
+              showModal(item.id);
+            }}>
+              进入相册
+            </Button>
               <div className={styles.avatarList}>
               </div>
             </div>
@@ -70,6 +104,7 @@ const ListSearchProjects: FC = () => {
   };
 
   return (
+    <>
     <div className={styles.coverCardList}>
       <Card bordered={false}>
         <Form
@@ -121,6 +156,12 @@ const ListSearchProjects: FC = () => {
       </Card>
       <div className={styles.cardList}>{cardList}</div>
     </div>
+    <Modal title="相册详情" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Image.PreviewGroup>
+      {pictureArray.map((picture) => <Image src={picture}/>)}
+      </Image.PreviewGroup>
+    </Modal>
+    </>
   );
 };
 

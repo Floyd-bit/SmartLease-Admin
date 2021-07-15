@@ -6,7 +6,7 @@ type ParamsType = {
 } & Partial<BasicListItemDataType>;
 
 export async function queryFakeList(params: ParamsType) {
-  return request('/apis/fake_list', {
+  return request('/api2/business/problem/selectById?id=5', {
     params,
   });
 }

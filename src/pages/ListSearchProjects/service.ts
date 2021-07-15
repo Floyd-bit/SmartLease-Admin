@@ -3,8 +3,9 @@ import type { Params, ListItemDataType } from 'ListSearchArticles/src/data';
 
 export async function queryFakeList(
   params: Params,
-): Promise<{ data: { list: ListItemDataType[] } }> {
-  return request('/api/fake_list', {
+): Promise<{ data: { value: ListItemDataType[] } }> {
+  return request('/api2/business/album/selectByStoreId?storeId=1', {
+ //  return request('/api/fake_list',{
     params,
   });
 }

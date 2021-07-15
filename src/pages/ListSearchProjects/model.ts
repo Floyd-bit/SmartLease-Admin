@@ -28,9 +28,10 @@ const Model: ModelType = {
   effects: {
     *fetch({ payload }, { call, put }) {
       const response = yield call(queryFakeList, payload);
+      console.log(response)
       yield put({
         type: 'queryList',
-        payload: Array.isArray(response) ? response : [],
+        payload: Array.isArray(response.data.value) ? response.data.value : [],
       });
     },
   },
@@ -39,7 +40,7 @@ const Model: ModelType = {
     queryList(state, action) {
       return {
         ...state,
-        list: action.payload,
+        list: action.payload
       };
     },
   },
