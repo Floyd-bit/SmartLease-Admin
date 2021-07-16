@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 赵卓轩
+ * @Date: 2021-07-05 10:45:55
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-16 16:05:37
+ */
 import React from 'react';
 import { HeartTwoTone, SmileTwoTone } from '@ant-design/icons';
 import { Card, Typography, Alert } from 'antd';
@@ -28,7 +36,7 @@ export default (): React.ReactNode => {
           }}
         />
         <Typography.Title level={2} style={{ textAlign: 'center' }}>
-          <SmileTwoTone /> Ant Design Pro <HeartTwoTone twoToneColor="#eb2f96" /> You
+          <SmileTwoTone /> 租享宝 <HeartTwoTone twoToneColor="#eb2f96" /> 你的宝
         </Typography.Title>
       </Card>
       <p style={{ textAlign: 'center', marginTop: 24 }}>

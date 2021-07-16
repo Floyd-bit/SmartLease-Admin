@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 11:23:09
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-12 11:22:18
+ * @LastEditTime: 2021-07-16 15:30:04
  */
 export type TableListItem = {
   key: number;
@@ -36,6 +36,7 @@ export type TableListData = {
 };
 
 export type TableListParams = {
+  id?: number;
   status?: string;
   name?: string;
   desc?: string;

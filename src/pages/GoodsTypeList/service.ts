@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 11:21:09
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-14 10:57:53
+ * @LastEditTime: 2021-07-16 15:27:56
  */
 import request from '@/utils/request';
 import type { TableListParams, TableListItem } from './data.d';
@@ -37,7 +37,7 @@ export async function addRule(params: TableListItem) {
 }
 
 export async function updateRule(params: TableListParams) {
-  return request('/api2/business/commodity/update', {
+  return request(`/api2/business/commodity/update?id=${params.id}`, {
     method: 'POST',
     data: {
       ...params,

@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-12 09:45:04
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-15 11:57:48
+ * @LastEditTime: 2021-07-16 16:01:07
  */
 import { Card, Col, Form, List, Row, Select, Button, Modal , Image} from 'antd';
 import React, { useState } from 'react';
@@ -48,6 +48,15 @@ const handleOk = () => {
 const handleCancel = () => {
   setIsModalVisible(false);
 };
+
+const handleAdd = () => {
+  
+};
+
+const handleRemove = (id) => {
+  
+}
+
   // 获取后台数据
   const { data, loading, run } = useRequest((values: any) => {
     console.log('form data', values);
@@ -158,7 +167,13 @@ const handleCancel = () => {
     </div>
     <Modal title="相册详情" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
       <Image.PreviewGroup>
-      {pictureArray.map((picture) => <Image src={picture}/>)}
+      {pictureArray.map((picture) => 
+      <Row align="middle">
+        <Image src={picture} width={400} height={300}/>
+        <Button danger onClick={handleRemove}>删除</Button>
+      </Row>
+      )}
+      <Button onClick={handleAdd}>添加图片</Button>
       </Image.PreviewGroup>
     </Modal>
     </>

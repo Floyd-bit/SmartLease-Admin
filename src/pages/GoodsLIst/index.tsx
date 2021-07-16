@@ -36,6 +36,37 @@ type GoodsLIstProps = {
   loading: boolean;
 };
 
+const titles = [
+  '戴尔Dell 3420 14英寸笔记本电脑',
+  'ThinkPad E14 14英寸笔记本电脑',
+  '联想Lenovo E97 台式机电脑',
+];
+const avatars = [
+  'https://file-gateway.52rental.com/file-gateway/stable/b4558fa0ccad4b3a8d243c2fa8e94759.png', // Alipay
+  'https://file-gateway.52rental.com/file-gateway/stable/6068251e1c5b471396081a99798a5601.png', // Angular
+  'https://file-gateway.52rental.com/file-gateway/stable/ea90d42517834c1992db187c31ce2082.jpg', // Ant Design
+];
+
+const covers = [
+  'https://gw.alipayobjects.com/zos/rmsportal/uMfMFlvUuceEyPpotzlq.png',
+  'https://gw.alipayobjects.com/zos/rmsportal/iZBVOIhGJiAnhplqjvZW.png',
+  'https://gw.alipayobjects.com/zos/rmsportal/iXjVmWVHbCJAyqvDxdtx.png',
+  'https://gw.alipayobjects.com/zos/rmsportal/gLaIAoVWTtLbBWZNYEMg.png',
+];
+const desc = [
+  '出现质量问题/保修',
+  '损坏/赔偿',
+  '不想要/退货',
+  '型号买错了/换货',
+];
+
+const user = [
+  '测试用户1',
+  '测试用户3',
+  '测试用户4',
+  '测试用户2',
+];
+
 const Info: FC<{
   title: React.ReactNode;
   value: React.ReactNode;

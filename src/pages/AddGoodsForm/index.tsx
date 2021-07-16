@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-09 11:24:06
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-13 10:38:07
+ * @LastEditTime: 2021-07-16 15:41:31
  */
 import { Button, Card, message } from 'antd';
 import ProForm, {
@@ -32,6 +32,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
     },
   });
 
+  /*
     // 将base64转换为文件
     const dataURLtoFile = (dataurl, filename) => { 
 	    const arr = dataurl.split(',');
@@ -66,9 +67,11 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
     .catch(err => console.log(err))
   };
 
+  */
+
   const onFinish = async (values: Record<string, any>) => {
-    const file = upload(values.subImages);
-    console.log(file);
+    // const file = upload(values.subImages);
+    // console.log(file);
     const status = values.commodityStatus?"ONSALE":"OFFSALE";
     // const gid = values.id.praseInt();
     const value = {
@@ -89,13 +92,13 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
       score: 1,
       storeId: 0,
       storeName: '1',
-      subImages: file,
       tardingVolume: 0,
       mark: 0,
       guaranteePrice: 100,
     };    
-    console.log(value);
+    // console.log(value);
     run(value);
+    console.log("完成");
   };
 
   return (
@@ -271,7 +274,6 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           name="commodityStatus"
          />
         </ProForm>
-        <Button onClick={onFinish}>测试</Button>
       </Card>
     </PageContainer>
   );
