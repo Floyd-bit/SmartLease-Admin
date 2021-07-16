@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 范玉琳
+ * @Date: 2021-07-06 10:19:08
+ * @LastEditors: 范玉琳
+ * @LastEditTime: 2021-07-16 10:23:27
+ */
 import request from 'umi-request';
 import type { ListItemDataType } from './data.d';
 

@@ -55,7 +55,7 @@ const ListContent = ({
 }) => (
   <div className={styles.listContent}>
     <div className={styles.listContentItem}>
-      <span>Owner</span>
+      <span>用户</span>
       <p>{owner}</p>
     </div>
     <div className={styles.listContentItem}>
@@ -241,7 +241,7 @@ export const GoodsLIst: FC<GoodsLIstProps> = (props) => {
                   ]}
                 >
                   <List.Item.Meta
-                    avatar={<Avatar src={item.logo} shape="square" size="large" />}
+                    avatar={<Avatar src={item.logo} />}
                     title={<a href={item.href}>{item.title}</a>}
                     description={item.subDescription}
                   />

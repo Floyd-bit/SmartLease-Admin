@@ -1,22 +1,15 @@
 /*
  * @Description: 
  * @version: 1.0
- * @Author: 赵卓轩
+ * @Author: 范玉琳
  * @Date: 2021-07-06 10:19:08
- * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-14 16:51:13
+ * @LastEditors: 范玉琳
+ * @LastEditTime: 2021-07-16 10:23:17
  */
-/*
- * @Description: 
- * @version: 1.0
- * @Author: 赵卓轩
- * @Date: 2021-07-06 10:19:08
- * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-14 11:29:20
- */
+
 import type { FC } from 'react';
 import React, { useEffect } from 'react';
-import { Button, Card, Col, Form, List, Row, Select, Tag } from 'antd';
+import { Button, Card, Col, Form, List, Row, Select, Tag, Image } from 'antd';
 import { LoadingOutlined, StarOutlined, LikeOutlined, MessageOutlined, WindowsOutlined } from '@ant-design/icons';
 import type { Dispatch } from 'umi';
 import { connect } from 'umi';
@@ -259,12 +252,16 @@ const  handleRemove = async (id: any) => {
                   </a>
                 }
                 description={
+                  <>
                   <span>
                     <Tag>评论</Tag>
                     <Tag>{item.commodityName}</Tag>
                   </span>
+                  <Image/> 
+                  </>
                 }
-              />            
+              />   
+                      
               <ArticleListContent data={item} />
             </List.Item>   
           </Col>   

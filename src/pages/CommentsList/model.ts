@@ -1,11 +1,12 @@
 /*
  * @Description: 
  * @version: 1.0
- * @Author: 赵卓轩
+ * @Author: 范玉琳
  * @Date: 2021-07-06 10:19:08
- * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-14 15:53:53
+ * @LastEditors: 范玉琳
+ * @LastEditTime: 2021-07-16 10:23:19
  */
+
 import type { Effect, Reducer } from 'umi';
 import type { ListItemDataType } from './data.d';
 import { queryFakeList } from './service';

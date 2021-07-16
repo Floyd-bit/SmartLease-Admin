@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @version: 1.0
+ * @Author: 范玉琳
+ * @Date: 2021-07-06 15:59:44
+ * @LastEditors: 范玉琳
+ * @LastEditTime: 2021-07-16 10:22:06
+ */
 import type { Effect, Reducer } from 'umi';
 
 import type { BasicGood } from './data.d';
