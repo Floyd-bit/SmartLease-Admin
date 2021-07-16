@@ -3,8 +3,8 @@
  * @version: 1.0
  * @Author: 范玉琳
  * @Date: 2021-07-06 10:19:08
- * @LastEditors: 范玉琳
- * @LastEditTime: 2021-07-16 10:23:17
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-16 11:13:41
  */
 
 import type { FC } from 'react';
@@ -257,11 +257,11 @@ const  handleRemove = async (id: any) => {
                     <Tag>评论</Tag>
                     <Tag>{item.commodityName}</Tag>
                   </span>
-                  <Image/> 
+                  
                   </>
                 }
               />   
-                      
+              <Image src={item.pictures[0]} height={150} width={150}/> 
               <ArticleListContent data={item} />
             </List.Item>   
           </Col>   
