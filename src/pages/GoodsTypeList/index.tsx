@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 11:20:47
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-16 15:36:33
+ * @LastEditTime: 2021-07-17 15:23:35
  */
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, message, Input, Drawer ,Tabs} from 'antd';
@@ -19,8 +19,7 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
 import type { TableListItem } from './data';
-import { queryRule, updateRule, addRule, removeRule } from './service';
-import { toUpper } from 'lodash';
+import { queryRule, updateRule, addRule, removeRule, removeSingleRule } from './service';
 
 const { TabPane } = Tabs;
 /**
@@ -81,6 +80,7 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
     await removeRule({
       key: selectedRows.map((row) => row.id),
     });
+    console.log("selectedRows",selectedRows.map((row) => row.id));
     hide();
     message.success('Deleted successfully and will refresh soon');
     return true;
@@ -90,6 +90,22 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
     return false;
   }
 };
+
+
+const handleSingleRemove = async (currentRowId: any) => {
+  const hide = message.loading('正在删除');
+  if(!currentRowId) return true;
+  try {
+    await removeSingleRule(currentRowId);
+    hide();
+    message.success("删除成功");
+    return true;
+  } catch(error) {
+    hide();
+    message.error('删除失败');
+    return false;
+  }
+}
 
 function callback(key) {
   console.log(key);
@@ -112,12 +128,18 @@ const GoodsTypeList: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [currentRow, setCurrentRow] = useState<TableListItem>();
   const [selectedRowsState, setSelectedRows] = useState<TableListItem[]>([]);
-
+  const [currentPage,setCurrentPage] = useState(1);
   /**
    * @en-US International configuration
    * @zh-CN 国际化配置
    * */
   const intl = useIntl();
+
+  const changePage = (page: any) => {
+    setCurrentPage(page);
+    // console.log(page);
+    actionRef.current.reload();
+  }
 
   const columns: ProColumns<TableListItem>[] = [
     // 商品编号
@@ -279,11 +301,11 @@ const GoodsTypeList: React.FC = () => {
         // 删除     
         <Button type="primary" danger icon={<DeleteOutlined/>} onClick={
           async () => {
-            setSelectedRows([record]);
-            // console.log(selectedRows.map((row) => row.key));
-            await handleRemove(selectedRowsState);
-            setSelectedRows([]);
-            actionRef.current?.reloadAndRest?.();
+            // setSelectedRows([record]);
+            // console.log(record.id);
+            await handleSingleRemove(record.id);
+            // setSelectedRows([]);
+            actionRef.current.reload();
           }}>          
         </Button>
       ],
@@ -308,6 +330,11 @@ const GoodsTypeList: React.FC = () => {
         search={{
           labelWidth: 120,
         }}
+        pagination={{  
+          current: currentPage,
+          total: 200,
+          onChange: changePage,
+        }}
         toolBarRender={() => [
           // 新增商品
           <Button
@@ -323,7 +350,7 @@ const GoodsTypeList: React.FC = () => {
         ]}
         // request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}
         request={
-          (params: any) => queryRule({ ...params }).then(response => {
+          (params,sorter,filter) => queryRule({ ...params,sorter,filter,currentPage}).then(response => {
             const result = {
               data: response.data.value.records.map((item:any,i:any) => {
                 return {

@@ -4,13 +4,13 @@
  * @Author: 范玉琳
  * @Date: 2021-07-06 10:19:08
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-16 11:13:41
+ * @LastEditTime: 2021-07-17 17:10:33
  */
 
 import type { FC } from 'react';
 import React, { useEffect } from 'react';
-import { Button, Card, Col, Form, List, Row, Select, Tag, Image } from 'antd';
-import { LoadingOutlined, StarOutlined, LikeOutlined, MessageOutlined, WindowsOutlined } from '@ant-design/icons';
+import { Button, Card, Col, Form, List, Row, Select, Tag, Image, message } from 'antd';
+import { LoadingOutlined, StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
 import type { Dispatch } from 'umi';
 import { connect } from 'umi';
 import ArticleListContent from './components/ArticleListContent';
@@ -124,13 +124,13 @@ const CommentsList: FC<CommentsListProps> = ({
 
   // 删除评论
 const  handleRemove = async (id: any) => {
-  axios.post(`api2/customer/user/login?id=${id}`)
+  axios.post(`api2/business/evaluation/deleteById?id=${id}`)
   .then(function (response) {
       if(response.data.message === "删除成功"){
-        alert("删除成功");
+        message.success("删除成功");
       }
       else{
-        alert("删除失败");
+        message.error("删除失败");
       }
   })
   .catch(err => console.log(err))

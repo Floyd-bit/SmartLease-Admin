@@ -4,9 +4,9 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-12 09:45:04
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-16 16:01:07
+ * @LastEditTime: 2021-07-17 15:48:09
  */
-import { Card, Col, Form, List, Row, Select, Button, Modal , Image} from 'antd';
+import { Card, Col, Form, List, Row, Select, Button, Modal , Image, Upload, message} from 'antd';
 import React, { useState } from 'react';
 import type { FC } from 'react';
 import { useRequest } from 'umi';
@@ -17,6 +17,7 @@ import { queryFakeList } from './service';
 import styles from './style.less';
 import axios from 'axios';
 import Item from 'antd/lib/list/Item';
+import { UploadOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 const FormItem = Form.Item;
@@ -67,6 +68,25 @@ const handleRemove = (id) => {
 
   // 渲染数据
   const list = data?.value || [];
+
+  // 上传按钮
+  const props = {
+    name: 'file',
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    headers: {
+      authorization: 'authorization-text',
+    },
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
 
   // 相册列表
   const cardList = list && (
@@ -170,10 +190,12 @@ const handleRemove = (id) => {
       {pictureArray.map((picture) => 
       <Row align="middle">
         <Image src={picture} width={400} height={300}/>
-        <Button danger onClick={handleRemove}>删除</Button>
+        <Button danger onClick={handleRemove} size="small" style={{marginLeft: 20}}>删除</Button>
       </Row>
       )}
-      <Button onClick={handleAdd}>添加图片</Button>
+    <Upload {...props}>
+      <Button icon={<UploadOutlined />}>上传图片</Button>
+    </Upload>
       </Image.PreviewGroup>
     </Modal>
     </>
