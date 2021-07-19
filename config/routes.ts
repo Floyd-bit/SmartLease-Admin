@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-09 20:19:49
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-14 10:13:34
+ * @LastEditTime: 2021-07-19 10:08:10
  */
 export default [
   {
@@ -84,7 +84,7 @@ export default [
                 path: '/accounts',
                 name: 'account',
                 icon: 'crown',
-                routes: [                
+                routes: [
                   {
                     name: 'shop',
                     icon: 'smile',
@@ -103,13 +103,21 @@ export default [
                 path: '/admin',
                 name: 'admin',
                 icon: 'crown',
-                component: './Admin',
+                // component: './Admin',
                 authority: ['admin'],
                 routes: [
                   {
-                    path: '/admin/sub-page',
-                    name: 'sub-page',
+                    name: 'storelist',
                     icon: 'smile',
+                    path: '/admin/storelist',
+                    component: './StoreList',
+                    authority: ['admin'],
+                  },
+                  {
+                    name: 'goodsmanage',
+                    icon: 'smile',
+                    path: '/admin/goodsmanage',
+                    component: './GoodsManage',
                     authority: ['admin'],
                   },
                 ],
@@ -129,9 +137,9 @@ export default [
                     name: 'templateList',
                     path: '/transport/templateList',
                     icon: 'smile',
-                    component: 'TemplateList'
-                  }
-                ]             
+                    component: 'TemplateList',
+                  },
+                ],
               },
               {
                 path: '/shop',

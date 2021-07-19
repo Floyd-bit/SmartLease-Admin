@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-13 11:42:15
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-13 14:05:33
+ * @LastEditTime: 2021-07-19 10:58:12
  */
 import { Table, Tag, Space } from 'antd';
 import React from 'react';
@@ -30,15 +30,15 @@ const data = [
   {
     id: 1,
     key: '1',
-    name: 'John Brown',
-    age: 32,
+    name: '戴尔Dell 3420 14英寸笔记本电脑租赁',
+    age: 55,
     address: 'New York No. 1 Lake Park',
     tags: ['nice', 'developer'],
   },
   {
     id: 2,
     key: '2',
-    name: 'Jim Green',
+    name: 'ThinkPad E14 14英寸笔记本电脑租赁',
     age: 42,
     address: 'London No. 1 Lake Park',
     tags: ['loser'],
@@ -46,7 +46,7 @@ const data = [
   {
     id: 3,
     key: '3',
-    name: 'Joe Black',
+    name: '联想Lenovo E97 台式机电脑租赁',
     age: 32,
     address: 'Sidney No. 1 Lake Park',
     tags: ['cool', 'teacher'],
@@ -54,7 +54,7 @@ const data = [
   {
     id: 4,
     key: '4',
-    name: 'Joe Black',
+    name: '新款骁龙865手机5G全网通大屏智能安卓',
     age: 32,
     address: 'Sidney No. 1 Lake Park',
     tags: ['cool', 'teacher'],
@@ -62,7 +62,7 @@ const data = [
   {
     id: 5,
     key: '5',
-    name: 'Joe Black',
+    name: '2021新款512G内存',
     age: 32,
     address: 'Sidney No. 1 Lake Park',
     tags: ['cool', 'teacher'],

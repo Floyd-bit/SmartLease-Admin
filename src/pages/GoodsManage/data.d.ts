@@ -2,27 +2,30 @@
  * @Description: 
  * @version: 1.0
  * @Author: 赵卓轩
- * @Date: 2021-07-05 10:45:55
+ * @Date: 2021-07-06 11:23:09
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-10 09:33:39
+ * @LastEditTime: 2021-07-19 10:27:21
  */
 export type TableListItem = {
   key: number;
   disabled?: boolean;
   href: string;
-  avatar: string;
-  name: string;
+  subImages: string; // 商品图片
+  id: number; // 商品编号
+  commodityName: string; // 商品名称
   owner: string;
   desc: string;
-  callNo: number;
-  status: number;
-  updatedAt: Date;
+  tradeNumber: number; // 交易量
+  commodityStatus: string; // 是否上架
+  number: number; // 库存
+  releaseTime: Date; // 加入时间
+  guaranteePrice: number; // 押金
   createdAt: Date;
   progress: number;
 };
 
 export type TableListPagination = {
-  total: number;
+  totalPages: number;
   pageSize: number;
   current: number;
 };
@@ -33,10 +36,12 @@ export type TableListData = {
 };
 
 export type TableListParams = {
+  id?: number;
   status?: string;
   name?: string;
   desc?: string;
   key?: number;
+  storeId?: number;
   pageSize?: number;
   currentPage?: number;
   filter?: Record<string, any[]>;

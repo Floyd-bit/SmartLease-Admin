@@ -13,6 +13,7 @@ import { useIntl, FormattedMessage } from 'umi';
 import type { TableListItem } from '../data.d';
 
 export type FormValueType = {
+  id?: number;
   target?: string;
   template?: string;
   type?: string;
@@ -42,7 +43,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
             destroyOnClose
             title={intl.formatMessage({
               id: 'pages.searchTable.updateForm.ruleConfig',
-              defaultMessage: '规则配置',
+              defaultMessage: '编辑租品',
             })}
             visible={props.updateModalVisible}
             footer={submitter}
@@ -58,8 +59,9 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
     >
       <StepsForm.StepForm
         initialValues={{
-          name: props.values.name,
-          desc: props.values.desc,
+          id: props.values.id,
+          commodityName: props.values.commodityName,
+          subImages: props.values.subImages,
         }}
         title={intl.formatMessage({
           id: 'pages.searchTable.updateForm.basicConfig',
@@ -67,10 +69,26 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         })}
       >
         <ProFormText
-          name="name"
+          name="id"
+          label="商品编号"
+          width="md"
+          rules={[
+            {
+              required: true,
+              message: (
+                <FormattedMessage
+                  id="pages.searchTable.updateForm.ruleName.nameRules"
+                  defaultMessage="请输入规则名称！"
+                />
+              ),
+            },
+          ]}
+        />
+        <ProFormText
+          name="commodityName"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.ruleName.nameLabel',
-            defaultMessage: '规则名称',
+            defaultMessage: '商品名称',
           })}
           width="md"
           rules={[
@@ -86,7 +104,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           ]}
         />
         <ProFormTextArea
-          name="desc"
+          name="subImages"
           width="md"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.ruleDesc.descLabel',
@@ -112,73 +130,70 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
       </StepsForm.StepForm>
       <StepsForm.StepForm
         initialValues={{
-          target: '0',
-          template: '0',
+          commodityStatus: 'ONSALE',
+          number: props.values.number,
+          tradeNumber: props.values.tradeNumber
         }}
-        title={intl.formatMessage({
-          id: 'pages.searchTable.updateForm.ruleProps.title',
-          defaultMessage: '配置规则属性',
-        })}
+        title="配置商品属性"
       >
-        <ProFormSelect
-          name="target"
-          width="md"
-          label={intl.formatMessage({
-            id: 'pages.searchTable.updateForm.object',
-            defaultMessage: '监控对象',
-          })}
-          valueEnum={{
-            0: '表一',
-            1: '表二',
-          }}
-        />
-        <ProFormSelect
-          name="template"
-          width="md"
-          label={intl.formatMessage({
-            id: 'pages.searchTable.updateForm.ruleProps.templateLabel',
-            defaultMessage: '规则模板',
-          })}
-          valueEnum={{
-            0: '规则模板一',
-            1: '规则模板二',
-          }}
-        />
         <ProFormRadio.Group
-          name="type"
-          label={intl.formatMessage({
-            id: 'pages.searchTable.updateForm.ruleProps.typeLabel',
-            defaultMessage: '规则类型',
-          })}
+          name="commodityStatus"
+          label="是否上架"
           options={[
             {
-              value: '0',
-              label: '强',
+              value: 'ONSALE',
+              label: '是',
             },
             {
-              value: '1',
-              label: '弱',
+              value: 'OFFSALE',
+              label: '否',
+            },
+          ]}
+        />
+        <ProFormText
+          name="number"
+          label="库存"
+          width="md"
+          rules={[
+            {
+              required: true,
+              message: (
+                <FormattedMessage
+                  id="pages.searchTable.updateForm.ruleName.nameRules"
+                  defaultMessage="请输入规则名称！"
+                />
+              ),
+            },
+          ]}
+        />
+        <ProFormText
+          name="tradeNumber"
+          label="交易量"
+          width="md"
+          rules={[
+            {
+              required: true,
+              message: (
+                <FormattedMessage
+                  id="pages.searchTable.updateForm.ruleName.nameRules"
+                  defaultMessage="请输入规则名称！"
+                />
+              ),
             },
           ]}
         />
       </StepsForm.StepForm>
       <StepsForm.StepForm
         initialValues={{
-          type: '1',
-          frequency: 'month',
+          releaseTime: props.values.releaseTime,
+          guaranteePrice: props.values.guaranteePrice
         }}
-        title={intl.formatMessage({
-          id: 'pages.searchTable.updateForm.schedulingPeriod.title',
-          defaultMessage: '设定调度周期',
-        })}
+        title="配置商品属性"
       >
         <ProFormDateTimePicker
-          name="time"
+          name="releaseTime"
           width="md"
-          label={intl.formatMessage({
-            id: 'pages.searchTable.updateForm.schedulingPeriod.timeLabel',
-            defaultMessage: '开始时间',
-          })}
+          label="加入时间"
           rules={[
             {
               required: true,
@@ -191,17 +206,21 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
             },
           ]}
         />
-        <ProFormSelect
-          name="frequency"
-          label={intl.formatMessage({
-            id: 'pages.searchTable.updateForm.object',
-            defaultMessage: '监控对象',
-          })}
+        <ProFormText
+          name="guranteePrice"
+          label="押金"
           width="md"
-          valueEnum={{
-            month: '月',
-            week: '周',
-          }}
+          rules={[
+            {
+              required: true,
+              message: (
+                <FormattedMessage
+                  id="pages.searchTable.updateForm.ruleName.nameRules"
+                  defaultMessage="请输入规则名称！"
+                />
+              ),
+            },
+          ]}
         />
       </StepsForm.StepForm>
     </StepsForm>

@@ -13,7 +13,7 @@ export async function query(): Promise<any> {
 }
 
 export async function queryCurrent(): Promise<any> {
-  return request('/api4/currentUser');
+  return request('/apis/currentUser');
 }
 
 export async function queryNotices(): Promise<any> {

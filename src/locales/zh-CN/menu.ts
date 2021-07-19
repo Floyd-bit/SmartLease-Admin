@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-14 10:19:01
+ * @LastEditTime: 2021-07-19 10:08:59
  */
 export default {
   'menu.welcome': '欢迎',
@@ -15,6 +15,8 @@ export default {
   'menu.login': '登录',
   'menu.register': '注册',
   'menu.results': '注册结果',
+  'menu.admin.storelist': '商铺管理',
+  'menu.admin.goodsmanage': '商品管理',
   'menu.dashboard': 'Dashboard',
   'menu.analysis': '系统首页',
   'menu.dashboard.monitor': '监控页',
