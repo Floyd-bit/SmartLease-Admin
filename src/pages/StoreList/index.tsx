@@ -4,10 +4,9 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-19 09:37:07
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-19 10:01:01
+ * @LastEditTime: 2021-07-20 16:29:04
  */
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, Card, List, Typography } from 'antd';
+import {  Card, List, Typography } from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
 import { useRequest } from 'umi';
 import { queryFakeList } from './service';
@@ -22,9 +21,9 @@ const StoreList = () => {
       count: 8,
     });
   });
+  
 
-  const list = data?.list || [];
-
+  const list = data?.value.records || [];
   const content = (
     <div className={styles.pageHeaderContent}>
       <p>
@@ -60,7 +59,6 @@ const StoreList = () => {
           }}
           dataSource={[nullData, ...list]}
           renderItem={(item) => {
-            if (item && item.id) {
               return (
                 <List.Item key={item.id}>
                   <Card
@@ -69,7 +67,7 @@ const StoreList = () => {
                     actions={[<a key="option1">编辑信息</a>, <a key="option2">删除商铺</a>]}
                   >
                     <Card.Meta
-                      avatar={<img alt="" className={styles.cardAvatar} src={item.avatar} />}
+                      avatar={<img alt="" className={styles.cardAvatar} src={item.icon} />}
                       title={<a>{item.storeName}</a>}
                       description={
                         <Paragraph className={styles.item} ellipsis={{ rows: 3 }}>
@@ -80,11 +78,6 @@ const StoreList = () => {
                   </Card>
                 </List.Item>
               );
-            }
-            return (
-              <List.Item>
-              </List.Item>
-            );
           }}
         />
       </div>

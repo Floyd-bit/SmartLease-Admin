@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 10:19:08
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-16 11:04:30
+ * @LastEditTime: 2021-07-20 14:56:18
  */
 export type Member = {
   avatar: string;
@@ -24,7 +24,7 @@ export type ListItemDataType = {
   href: string;
   body?: any;
   updatedAt: number;
-  time: Date; // 发布时间
+  time: number; // 发布时间
   pictures: any; // 评论图片
   subDescription: string;
   content: string; // 评论内容

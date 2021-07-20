@@ -4,13 +4,15 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-19 13:23:26
+ * @LastEditTime: 2021-07-20 16:30:16
  */
 import React from 'react';
 import { Button, Tooltip, Tag } from 'antd';
-import { DownOutlined, QuestionCircleOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { DownOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
+import { useRequest } from '@/.umi/plugin-request/request';
+import { queryRule } from './service';
 
 export type Status = {
   color: string;
@@ -41,6 +43,12 @@ const statusMap = {
 };
 
 export type TableListItem = {
+  id: number; // 订单号
+  transportPrice: number; // 运费
+  discount: number; // 折扣
+  deliveryMode: string; // 模式
+  paymentTime: number; // 支付时间
+  gmtCreate: number; // 创建时间
   key: number;
   name: string;
   containers: number;
@@ -48,10 +56,13 @@ export type TableListItem = {
   status: Status;
   createdAt: number;
 };
+
+
 const tableListDataSource: TableListItem[] = [];
 
-const creators = ['付小小', '曲丽丽', '林东东', '陈帅帅', '兼某某'];
+// const creators = ['付小小', '曲丽丽', '林东东', '陈帅帅', '兼某某'];
 
+/*
 for (let i = 0; i < 5; i += 1) {
   tableListDataSource.push({
     key: i,
@@ -62,12 +73,13 @@ for (let i = 0; i < 5; i += 1) {
     createdAt: Date.now() - Math.floor(Math.random() * 100000),
   });
 }
+*/
 
 const columns: ProColumns<TableListItem>[] = [
   {
     title: '订单号',
     width: 120,
-    dataIndex: 'name',
+    dataIndex: 'id',
     render: (_) => <a>{_}</a>,
   },
   {
@@ -77,54 +89,39 @@ const columns: ProColumns<TableListItem>[] = [
     render: (_, record) => <Tag color={record.status.color}>{record.status.text}</Tag>,
   },
   {
-    title: '实付款',
-    width: 120,
-    dataIndex: 'containers',
-    align: 'right',
-    sorter: (a, b) => a.containers - b.containers,
-  },
-  {
     title: '折扣',
     width: 120,
-    dataIndex: 'containers',
+    dataIndex: 'discount',
     align: 'right',
-    sorter: (a, b) => a.containers - b.containers,
+    sorter: (a, b) => a.discount - b.containers,
   },
   {
-    title: '保证金',
+    title: '模式',
     width: 120,
-    dataIndex: 'containers',
+    dataIndex: 'deliveryMode',
     align: 'right',
-    sorter: (a, b) => a.containers - b.containers,
-  },
-  {
-    title: '租金',
-    width: 120,
-    dataIndex: 'containers',
-    align: 'right',
-    sorter: (a, b) => a.containers - b.containers,
   },
   {
     title: '运费',
     width: 120,
-    dataIndex: 'containers',
+    dataIndex: 'transportPrice',
     align: 'right',
-    sorter: (a, b) => a.containers - b.containers,
+    sorter: (a, b) => a.transportPrice - b.transportPrice,
   },
   {
     title: (
       <>
         创建时间
-        <Tooltip placement="top" title="这是一段描述">
+        <Tooltip placement="top" title="订单创建时间">
           <QuestionCircleOutlined style={{ marginLeft: 4 }} />
         </Tooltip>
       </>
     ),
     width: 140,
     key: 'since',
-    dataIndex: 'createdAt',
+    dataIndex: 'gmtCreate',
     valueType: 'date',
-    sorter: (a, b) => a.createdAt - b.createdAt,
+    sorter: (a, b) => a.gmtCreate - b.gmtCreate,
   },
   {
     title: (
@@ -137,9 +134,9 @@ const columns: ProColumns<TableListItem>[] = [
     ),
     width: 140,
     key: 'since',
-    dataIndex: 'createdAt',
+    dataIndex: 'paymentTime',
     valueType: 'date',
-    sorter: (a, b) => a.createdAt - b.createdAt,
+    sorter: (a, b) => a.paymentTime - b.paymentTime,
   },
   {
     title: '操作',
@@ -147,8 +144,8 @@ const columns: ProColumns<TableListItem>[] = [
     key: 'option',
     valueType: 'option',
     render: () => [
-      <a key="1">链路</a>,
-      <a key="2">报警</a>,
+      <a key="1">编辑</a>,
+      <a key="2">删除</a>,
     ],
   },
 ];
@@ -166,19 +163,19 @@ const expandedRowRender = () => {
   return (
     <ProTable
       columns={[
-        { title: '商铺ID', dataIndex: 'date', key: 'date' },
-        { title: '用户ID', dataIndex: 'name', key: 'name' },
+        { title: '商铺ID', dataIndex: 'storeId', key: 'storeId' },
+        { title: '用户ID', dataIndex: 'userId', key: 'userId' },
 
-        { title: '商品ID', dataIndex: 'upgradeNum', key: 'upgradeNum' },
-        { title: '数量', dataIndex: 'upgradeNum', key: 'upgradeNum' },
-        { title: '租期', dataIndex: 'upgradeNum', key: 'upgradeNum' },
-        { title: '状态', dataIndex: 'upgradeNum', key: 'upgradeNum' },
+        { title: '商品ID', dataIndex: 'commodityId', key: 'commodityId' },
+        { title: '数量', dataIndex: 'number', key: 'number' },
+        { title: '租期', dataIndex: 'rentDays', key: 'rentDays' },
+        { title: '状态', dataIndex: 'status', key: 'status' },
         {
           title: 'Action',
           dataIndex: 'operation',
           key: 'operation',
           valueType: 'option',
-          render: () => [<a key="Pause">Pause</a>, <a key="Stop">Stop</a>],
+          render: () => [<a key="Pause">编辑</a>, <a key="Stop">删除</a>],
         },
       ]}
       headerTitle={false}
@@ -194,6 +191,7 @@ export default () => {
   return (
     <ProTable<TableListItem>
       columns={columns}
+      /*
       request={(params, sorter, filter) => {
         // 表单搜索项会从 params 传入，传递给后端接口。
         console.log(params, sorter, filter);
@@ -202,6 +200,20 @@ export default () => {
           success: true,
         });
       }}
+      */
+      request={
+        (params,sorter,filter) => queryRule({ ...params,filter,currentPage}).then(response => {
+          const result = {
+            data: response.data.value.records.map((item: any,i: any) => {
+              return {
+                ...item,
+                key: i.toString(),
+              }
+            }),
+          }
+          return result;
+        })
+      } 
       rowKey="key"
       pagination={{
         showQuickJumper: true,

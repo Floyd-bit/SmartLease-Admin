@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 10:18:02
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-16 09:11:30
+ * @LastEditTime: 2021-07-20 14:16:31
  */
 import request from 'umi-request';
 import type { BasicListItemDataType } from './data.d';
@@ -15,20 +15,17 @@ type ParamsType = {
 
 export async function queryFakeList(params: ParamsType) {
   // return request('/api2/business/problem/selectById?id=5', {
-  return request('/apis/fake_list',{
+  return request('/api2/business/problem/selectByIsSolve?storeId=1',{
     params,
   });
 }
 
 export async function removeFakeList(params: ParamsType) {
-  const { count = 5, ...restParams } = params;
-  return request('/apis/fake_list', {
-    method: 'POST',
-    params: {
-      count,
-    },
+  return request('/api2/business/problem/deleteById', {
+    method: 'DELETE',
+    params,
     data: {
-      ...restParams,
+      params,
       method: 'delete',
     },
   });

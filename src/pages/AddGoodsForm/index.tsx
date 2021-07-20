@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-09 11:24:06
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-16 15:41:31
+ * @LastEditTime: 2021-07-20 10:00:24
  */
 import { Button, Card, message } from 'antd';
 import ProForm, {
@@ -160,19 +160,8 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
             placeholder="请输入"
           />
           <ProFormText
-            label="材质"
-            name="additionalProp2"
-            rules={[
-              {
-                required: true,
-                message: '输入图片名称',
-              },
-            ]}
-            placeholder="请输入"
-          />
-          <ProFormText
             label="品牌"
-            name="additionalProp3"
+            name="additionalProp2"
             rules={[
               {
                 required: true,
@@ -185,7 +174,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           <ProForm.Group>
           <ProFormText
             label="产品重量"
-            name="additionalProp4"
+            name="additionalProp3"
             rules={[
               {
                 required: true,
@@ -195,16 +184,32 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
             placeholder="请输入"
           />
               <ProFormSelect
-                initialValue="money"
+                initialValue="游戏装备"
                 options={[
                   {
-                    value: 'money',
-                    label: '确认金额',
+                    value: 1,
+                    label: '游戏装备',
+                  },
+                  {
+                    value: 2,
+                    label: '数码摄影',
+                  },
+                  {
+                    value: 3,
+                    label: '电脑办公',
+                  },
+                  {
+                    value: 4,
+                    label: '精品手机',
+                  },
+                  {
+                    value: 5,
+                    label: '娱乐影音',
                   },
                 ]}
                 width="xs"
-                name="additionalProp5"
-                label="单位"
+                name="additionalProp4"
+                label="分类"
               />
           <ProFormText
             label="展示价格"
@@ -219,7 +224,7 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
           />
           <ProFormText
             label="市场价格"
-            name="additionalProp6"
+            name="additionalProp5"
             rules={[
               {
                 required: true,

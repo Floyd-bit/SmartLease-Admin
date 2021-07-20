@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 10:18:02
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-15 16:46:16
+ * @LastEditTime: 2021-07-20 14:13:03
  */
 import type { Effect, Reducer } from 'umi';
 import { addFakeList, queryFakeList, removeFakeList, updateFakeList } from './service';
@@ -41,14 +41,14 @@ const Model: ModelType = {
       const response = yield call(queryFakeList, payload);
       yield put({
         type: 'queryList',
-        payload: Array.isArray(response) ? response : [],
+        payload: Array.isArray(response.data.value) ? response.data.value : [],
       });
     },
     *appendFetch({ payload }, { call, put }) {
       const response = yield call(queryFakeList, payload);
       yield put({
         type: 'appendList',
-        payload: Array.isArray(response) ? response : [],
+        payload: Array.isArray(response.data.value) ? response.data.value : [],
       });
     },
     *submit({ payload }, { call, put }) {

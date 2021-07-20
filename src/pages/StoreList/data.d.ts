@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-19 09:37:07
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-19 10:00:28
+ * @LastEditTime: 2021-07-20 08:42:07
  */
 export type Member = {
   avatar: string;
@@ -19,6 +19,7 @@ export type CardListItemDataType = {
   avatar: string; // 头像
   cover: string;
   status: 'normal' | 'exception' | 'active' | 'success';
+  icon: string; // 商铺头像
   percent: number;
   logo: string;
   href: string;

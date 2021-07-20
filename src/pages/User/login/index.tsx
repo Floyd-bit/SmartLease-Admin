@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 17:23:57
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-10 09:42:54
+ * @LastEditTime: 2021-07-20 09:25:16
  */
 import {
   AlipayCircleOutlined,
@@ -15,7 +15,7 @@ import {
   UserOutlined,
   WeiboCircleOutlined,
 } from '@ant-design/icons';
-import { Alert, Space, message, Tabs } from 'antd';
+import { Alert, Space, message, Tabs ,Image, Row, Col} from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { useIntl, connect, FormattedMessage } from 'umi';
@@ -25,6 +25,7 @@ import type { StateType } from '@/models/login';
 import type { LoginParamsType } from '@/services/login';
 import type { ConnectState } from '@/models/connect';
 
+import logo from '../../../../public/icons/logo.png';
 import styles from './index.less';
 
 export type LoginProps = {
@@ -61,6 +62,8 @@ const Login: React.FC<LoginProps> = (props) => {
   };
   return (
     <div className={styles.main}>
+      <Row justify="space-around" align="middle">
+      <Col span={16}>
       <ProForm
         initialValues={{
           autoLogin: true,
@@ -254,7 +257,7 @@ const Login: React.FC<LoginProps> = (props) => {
                   return;
                 }
                 message.success(
-                  '获取验证码成功，验证码是1234',
+                  '获取验证码成功，验证码是3518',
                 );
               }}
             />
@@ -286,13 +289,22 @@ const Login: React.FC<LoginProps> = (props) => {
             没有账号？点击注册
           </a>
         </div>
-      </ProForm>
+      </ProForm>    
       <Space className={styles.other}>
         <FormattedMessage id="pages.login.loginWith" defaultMessage="Other login methods" />
         <AlipayCircleOutlined className={styles.icon} />
         <TaobaoCircleOutlined className={styles.icon} />
         <WeiboCircleOutlined className={styles.icon} />
-      </Space>
+      </Space> 
+      </Col>
+      <Col span={3}>
+      <div className={styles.scene}>
+        <div className={styles.rocket}>
+            <img src= {logo} alt="" width="36"/>
+        </div>
+      </div>
+      </Col>
+      </Row>
     </div>
   );
 };

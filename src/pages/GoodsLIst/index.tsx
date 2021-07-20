@@ -2,7 +2,6 @@ import type { FC } from 'react';
 import React, { useRef, useState, useEffect } from 'react';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import {
-  Avatar,
   Button,
   Card,
   Col,
@@ -11,7 +10,6 @@ import {
   List,
   Menu,
   Modal,
-  Progress,
   Radio,
   Row,
 } from 'antd';
@@ -49,21 +47,22 @@ const Info: FC<{
 );
 
 const ListContent = ({
-  data: { owner, createdAt, percent, status },
+  data: { orderItemId, createTime, payment },
 }: {
   data: BasicListItemDataType;
 }) => (
   <div className={styles.listContent}>
     <div className={styles.listContentItem}>
-      <span>用户</span>
-      <p>{owner}</p>
+      <span>订单号</span>
+      <p>{orderItemId}</p>
     </div>
     <div className={styles.listContentItem}>
       <span>开始时间</span>
-      <p>{moment(createdAt).format('YYYY-MM-DD HH:mm')}</p>
+      <p>{moment(createTime).format('YYYY-MM-DD HH:mm')}</p>
     </div>
     <div className={styles.listContentItem}>
-      <Progress percent={percent} status={status} strokeWidth={6} style={{ width: 180 }} />
+    <span>支付金额</span>
+      <p>{payment}￥</p>
     </div>
   </div>
 );
@@ -78,15 +77,17 @@ export const GoodsLIst: FC<GoodsLIstProps> = (props) => {
   const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
   const [current, setCurrent] = useState<Partial<BasicListItemDataType> | undefined>(undefined);
+  const [isSolve, setIsSolve] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch({
       type: 'goodsLIst/fetch',
       payload: {
         count: 5,
+        isSolve
       },
     });
-  }, [1]);
+  }, [isSolve]);
 
   const paginationProps = {
     showSizeChanger: true,
@@ -127,10 +128,9 @@ export const GoodsLIst: FC<GoodsLIstProps> = (props) => {
 
   const extraContent = (
     <div className={styles.extraContent}>
-      <RadioGroup defaultValue="all">
-        <RadioButton value="all">全部</RadioButton>
-        <RadioButton value="progress">未处理</RadioButton>
-        <RadioButton value="waiting">已处理</RadioButton>
+      <RadioGroup defaultValue="progress">
+        <RadioButton value="progress" onClick={()=>{setIsSolve(false)}}>未处理</RadioButton>
+        <RadioButton value="waiting" onClick={()=>{setIsSolve(true)}}>已处理</RadioButton>
       </RadioGroup>
       <Search className={styles.extraContentSearch} placeholder="请输入" onSearch={() => ({})} />
     </div>
@@ -241,9 +241,8 @@ export const GoodsLIst: FC<GoodsLIstProps> = (props) => {
                   ]}
                 >
                   <List.Item.Meta
-                    avatar={<Avatar src={item.logo} />}
-                    title={<a href={item.href}>{item.title}</a>}
-                    description={item.subDescription}
+                    title={<a href={item.href}>{item.customerNickName}</a>}
+                    description={item.problemDescription}
                   />
                   <ListContent data={item} />
                 </List.Item>

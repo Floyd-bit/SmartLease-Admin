@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 11:20:47
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-17 15:23:35
+ * @LastEditTime: 2021-07-20 14:43:11
  */
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, message, Input, Drawer ,Tabs} from 'antd';
@@ -352,7 +352,7 @@ const GoodsTypeList: React.FC = () => {
         request={
           (params,sorter,filter) => queryRule({ ...params,sorter,filter,currentPage}).then(response => {
             const result = {
-              data: response.data.value.records.map((item:any,i:any) => {
+              data: response.data.value.records.map((item: any,i: any) => {
                 return {
                   ...item,
                   key: i.toString(),

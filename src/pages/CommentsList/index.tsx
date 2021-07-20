@@ -4,12 +4,12 @@
  * @Author: 范玉琳
  * @Date: 2021-07-06 10:19:08
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-17 17:10:33
+ * @LastEditTime: 2021-07-20 14:55:47
  */
 
-import type { FC } from 'react';
+import { FC, useState } from 'react';
 import React, { useEffect } from 'react';
-import { Button, Card, Col, Form, List, Row, Select, Tag, Image, message } from 'antd';
+import { Button, Card, Col, Form, List, Row, Select, Tag, Image, message, Modal } from 'antd';
 import { LoadingOutlined, StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
 import type { Dispatch } from 'umi';
 import { connect } from 'umi';
@@ -20,6 +20,7 @@ import StandardFormRow from './components/StandardFormRow';
 import TagSelect from './components/TagSelect';
 import styles from './style.less';
 import axios from 'axios';
+import TextArea from 'antd/lib/input/TextArea';
 
 const { Option } = Select;
 const FormItem = Form.Item;
@@ -36,7 +37,28 @@ const CommentsList: FC<CommentsListProps> = ({
   commentsList: { list },
   loading,
 }) => {
+  const [refresh,setRefresh] = useState(0);
   const [form] = Form.useForm();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+    message.success("回复成功");
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+  
+  // 回复框变化
+  const onChange = e => {
+    console.log('Change:', e.target.value);
+  };
+
   useEffect(() => {
     dispatch({
       type: 'commentsList/fetch',
@@ -44,7 +66,7 @@ const CommentsList: FC<CommentsListProps> = ({
         size: 5,
       },
     });
-  }, []);
+  }, [refresh]);
   const setOwner = () => {
     form.setFieldsValue({
       owner: ['wzj'],
@@ -124,10 +146,11 @@ const CommentsList: FC<CommentsListProps> = ({
 
   // 删除评论
 const  handleRemove = async (id: any) => {
-  axios.post(`api2/business/evaluation/deleteById?id=${id}`)
+  axios.delete(`/api2/business/evaluation/deleteById?id=${id}`)
   .then(function (response) {
       if(response.data.message === "删除成功"){
         message.success("删除成功");
+        setRefresh(refresh+1);
       }
       else{
         message.error("删除失败");
@@ -266,7 +289,7 @@ const  handleRemove = async (id: any) => {
             </List.Item>   
           </Col>   
           <Col span={2}>
-            <Button>回复</Button>
+            <Button onClick={showModal}>回复</Button>
           </Col>
           <Col span={2}>
             <Button danger onClick={async () => {await handleRemove(item.id)}}>删除</Button>
@@ -275,6 +298,9 @@ const  handleRemove = async (id: any) => {
           )}
         />
       </Card>
+      <Modal title="回复评价" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <TextArea showCount maxLength={100} onChange={onChange} />
+      </Modal>
     </>
   );
 };

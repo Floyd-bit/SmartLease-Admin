@@ -3,8 +3,8 @@
  * @version: 1.0
  * @Author: 范玉琳
  * @Date: 2021-07-06 10:19:08
- * @LastEditors: 范玉琳
- * @LastEditTime: 2021-07-16 10:23:19
+ * @LastEditors: 赵卓轩
+ * @LastEditTime: 2021-07-20 14:23:43
  */
 
 import type { Effect, Reducer } from 'umi';
@@ -39,7 +39,7 @@ const Model: ModelType = {
     *fetch({ payload }, { call, put }) {
       // 调用获取评论接口
       const response = yield call(queryFakeList, payload);
-      console.log(response)
+      // console.log(response)
       yield put({
         type: 'queryList',
         payload: Array.isArray(response.data.value.records) ? response.data.value.records : [],

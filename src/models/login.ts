@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-16 22:14:15
+ * @LastEditTime: 2021-07-20 16:53:10
  */
 import { stringify } from 'querystring';
 import type { Reducer, Effect } from 'umi';
@@ -20,6 +20,7 @@ export type StateType = {
   status?: string;
   type?: string;
   currentAuthority?: 'user' | 'guest' | 'admin';
+  userId?: string;
   // currentAuthority: 'admin';
 };
 
@@ -52,9 +53,10 @@ const Model: LoginModelType = {
       // Login successfully
       // 与后台对接时判断条件改为'登陆成功'
       if (response.message === '登陆成功') {
+        console.log(response);
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
-        message.success('🎉 🎉 🎉  登录成功！');
+        message.success('🎉 🎉 🎉  登陆成功！');
         let { redirect } = params as { redirect: string };
         if (redirect) {
           const redirectUrlParams = new URL(redirect);
@@ -100,6 +102,7 @@ const Model: LoginModelType = {
         status: payload.message,
         // type: payload.type,
         type: 'mobile',
+        userId: payload.data,
       };
     },
   },
