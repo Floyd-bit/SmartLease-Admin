@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-09 20:19:49
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-19 10:08:10
+ * @LastEditTime: 2021-07-20 23:22:08
  */
 export default [
   {
@@ -47,23 +47,27 @@ export default [
                 icon: 'smile',
                 path: '/',
                 component: './MainPage',
+                authority: ['user'],
               },
               {
                 path: '/goods',
                 name: 'goods',
                 icon: 'crown',
+                authority: ['user'],
                 routes: [
                   {
                     name: 'goodsTypeList',
                     icon: 'smile',
                     path: '/goods/goodstypelist',
                     component: './GoodsTypeList',
+                    authority: ['user'],
                   },
                   {
                     name: 'addgoods',
                     icon: 'smile',
                     path: '/goods/addgoodsform',
                     component: './AddGoodsForm',
+                    authority: ['user'],
                   },
                 ],
               },
@@ -71,12 +75,14 @@ export default [
                 path: '/pictures',
                 name: 'pictures',
                 icon: 'crown',
+                authority: ['user'],
                 routes: [
                   {
                     name: 'album',
                     icon: 'smile',
                     path: '/pictures/listsearchprojects',
                     component: './ListSearchProjects',
+                    authority: ['user'],
                   },
                 ],
               },
@@ -84,18 +90,21 @@ export default [
                 path: '/accounts',
                 name: 'account',
                 icon: 'crown',
+                authority: ['user'],
                 routes: [
                   {
                     name: 'shop',
                     icon: 'smile',
                     path: '/accounts/shop',
                     component: './ShopCenter',
+                    authority: ['user'],
                   },
                   {
                     name: 'myshop',
                     icon: 'smile',
                     path: '/accounts/myshop',
                     component: './MyShop',
+                    authority: ['user'],
                   },
                 ],
               },
@@ -132,6 +141,7 @@ export default [
                     path: '/transport/addtemplate',
                     icon: 'smile',
                     component: 'AddLogistics',
+                    authority: ['user'],
                   },
                   {
                     name: 'templateList',
@@ -157,6 +167,7 @@ export default [
                     icon: 'smile',
                     path: '/shop/afterlist',
                     component: './GoodsList',
+                    authority: ['user'],
                   },
                   {
                     name: 'search-list',

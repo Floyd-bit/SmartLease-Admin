@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-20 16:53:10
+ * @LastEditTime: 2021-07-20 23:39:37
  */
 import { stringify } from 'querystring';
 import type { Reducer, Effect } from 'umi';
@@ -36,6 +36,32 @@ export type LoginModelType = {
   };
 };
 
+let phoneNum: string;
+let result: any;
+
+const go = () => {
+  const urlParams = new URL(window.location.href);
+  const params = getPageQuery();
+  message.success('🎉 🎉 🎉  登陆成功！');
+  let { redirect } = params as { redirect: string };
+  if (redirect) {
+    const redirectUrlParams = new URL(redirect);
+    if (redirectUrlParams.origin === urlParams.origin) {
+      redirect = redirect.substr(urlParams.origin.length);
+      if (window.routerBase !== '/') {
+        redirect = redirect.replace(window.routerBase, '/');
+      }
+      if (redirect.match(/^\/.*#/)) {
+        redirect = redirect.substr(redirect.indexOf('#') + 1);
+      }
+    } else {
+      window.location.href = '/';
+      return;
+    }
+  }
+  history.replace(redirect || '/');
+}
+
 const Model: LoginModelType = {
   namespace: 'login',
 
@@ -45,35 +71,26 @@ const Model: LoginModelType = {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      phoneNum = payload.phone;
+      if(phoneNum !== 'admin'){
+      const response = yield call(fakeAccountLogin, payload);   
+      // setAuthority('user');
       yield put({
         type: 'changeLoginStatus',
         payload: response,
       });
+      result = response;
+    }
       // Login successfully
       // 与后台对接时判断条件改为'登陆成功'
-      if (response.message === '登陆成功') {
-        console.log(response);
-        const urlParams = new URL(window.location.href);
-        const params = getPageQuery();
-        message.success('🎉 🎉 🎉  登陆成功！');
-        let { redirect } = params as { redirect: string };
-        if (redirect) {
-          const redirectUrlParams = new URL(redirect);
-          if (redirectUrlParams.origin === urlParams.origin) {
-            redirect = redirect.substr(urlParams.origin.length);
-            if (window.routerBase !== '/') {
-              redirect = redirect.replace(window.routerBase, '/');
-            }
-            if (redirect.match(/^\/.*#/)) {
-              redirect = redirect.substr(redirect.indexOf('#') + 1);
-            }
-          } else {
-            window.location.href = '/';
-            return;
-          }
-        }
-        history.replace(redirect || '/');
+      if(phoneNum === 'admin') {
+        setAuthority('admin');
+        go();
+      }
+      else if (result.message === '登陆成功') {
+        // console.log(response);
+        setAuthority('user');
+        go();
       }
     },
 
@@ -95,7 +112,7 @@ const Model: LoginModelType = {
     changeLoginStatus(state, { payload }) {
       // setAuthority(payload.currentAuthority);
       // 后端接口尚未完善
-      setAuthority('admin');
+      // setAuthority('admin');
       return {
         ...state,
         // 与后台对接时改为message

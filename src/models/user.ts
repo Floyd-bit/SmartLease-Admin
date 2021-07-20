@@ -4,11 +4,12 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-09 20:49:49
+ * @LastEditTime: 2021-07-20 23:52:07
  */
 import type { Effect, Reducer } from 'umi';
 
-import { queryCurrent, query as queryUsers } from '@/services/user';
+import { queryCurrent, query as queryUsers, queryAdmin } from '@/services/user';
+import { getAuthority } from '@/utils/authority';
 
 export type CurrentUser = {
   avatar?: string;
@@ -57,11 +58,23 @@ const UserModel: UserModelType = {
       });
     },
     *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
-      yield put({
-        type: 'saveCurrentUser',
-        payload: response,
-      });
+      const authority = getAuthority();
+      if(authority){
+      if(authority[0] === 'user'){
+        const response = yield call(queryCurrent);
+        yield put({
+          type: 'saveCurrentUser',
+          payload: response,
+        });
+      }
+      else if(authority[0] === 'admin'){
+        const response = yield call(queryAdmin);
+        yield put({
+          type: 'saveCurrentUser',
+          payload: response,
+        });
+      }
+      }
     },
   },
 
