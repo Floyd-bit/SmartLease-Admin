@@ -4,16 +4,17 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-21 10:19:32
+ * @LastEditTime: 2021-07-21 23:48:10
  */
-import React,{useState,useEffect} from 'react';
-import { Button, Tooltip, Tag, message } from 'antd';
+import React,{useState} from 'react';
+import { Button, Tooltip, Tag, message, Modal, Select } from 'antd';
 import { DownOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { useRequest } from '@/.umi/plugin-request/request';
 import { queryRule } from './service';
 import axios from 'axios';
+
+const { Option } = Select;
 
 export type TableListItem = {
   id: number; // 订单号
@@ -28,6 +29,9 @@ export type TableListItem = {
   creator: string;
   status: string;
   createdAt: number;
+  uniform: string;
+  rentPrice: number;
+  orderStatus: string;
 };
 
 
@@ -48,84 +52,101 @@ for (let i = 0; i < 5; i += 1) {
 }
 */
 
-const columns: ProColumns<TableListItem>[] = [
-  {
-    title: '订单号',
-    width: 120,
-    dataIndex: 'id',
-    render: (_) => <a>{_}</a>,
-  },
-  {
-    title: '状态',
-    width: 120,
-    dataIndex: 'status',
-    // render: (_, record) => <Tag color={record.status.color}>{record.status.text}</Tag>,
-  },
-  {
-    title: '折扣',
-    width: 120,
-    dataIndex: 'discount',
-    align: 'right',
-    sorter: (a, b) => a.discount - b.containers,
-  },
-  {
-    title: '模式',
-    width: 120,
-    dataIndex: 'deliveryMode',
-    align: 'right',
-  },
-  {
-    title: '运费',
-    width: 120,
-    dataIndex: 'transportPrice',
-    align: 'right',
-    sorter: (a, b) => a.transportPrice - b.transportPrice,
-  },
-  {
-    title: (
-      <>
-        创建时间
-        <Tooltip placement="top" title="订单创建时间">
-          <QuestionCircleOutlined style={{ marginLeft: 4 }} />
-        </Tooltip>
-      </>
-    ),
-    width: 140,
-    key: 'since',
-    dataIndex: 'gmtCreate',
-    valueType: 'date',
-    sorter: (a, b) => a.gmtCreate - b.gmtCreate,
-  },
-  {
-    title: (
-      <>
-        支付时间
-        <Tooltip placement="top" title="用户支付时间">
-          <QuestionCircleOutlined style={{ marginLeft: 4 }} />
-        </Tooltip>
-      </>
-    ),
-    width: 140,
-    key: 'since',
-    dataIndex: 'paymentTime',
-    valueType: 'date',
-    sorter: (a, b) => a.paymentTime - b.paymentTime,
-  },
-  {
-    title: '操作',
-    width: 164,
-    key: 'option',
-    valueType: 'option',
-    render: () => [
-      <a key="1">编辑</a>,
-      <a key="2">删除</a>,
-    ],
-  },
-];
 
+const handleRemove = () => {
+  message.success('删除成功');
+}
 
 export default () => {
   const [data,setData] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const columns: ProColumns<TableListItem>[] = [
+    {
+      title: '订单号',
+      width: 120,
+      dataIndex: 'id',
+      render: (_) => <a>{_}</a>,
+    },
+    {
+      title: '状态',
+      width: 120,
+      dataIndex: 'status',
+      // render: (_, record) => <Tag color={record.status.color}>{record.status.text}</Tag>,
+    },
+    {
+      title: '折扣',
+      width: 120,
+      dataIndex: 'discount',
+      align: 'right',
+      sorter: (a, b) => a.discount - b.containers,
+    },
+    {
+      title: '模式',
+      width: 120,
+      dataIndex: 'deliveryMode',
+      align: 'right',
+    },
+    {
+      title: '运费',
+      width: 120,
+      dataIndex: 'transportPrice',
+      align: 'right',
+      sorter: (a, b) => a.transportPrice - b.transportPrice,
+    },
+    {
+      title: (
+        <>
+          创建时间
+          <Tooltip placement="top" title="订单创建时间">
+            <QuestionCircleOutlined style={{ marginLeft: 4 }} />
+          </Tooltip>
+        </>
+      ),
+      width: 140,
+      key: 'since',
+      dataIndex: 'gmtCreate',
+      valueType: 'date',
+      sorter: (a, b) => a.gmtCreate - b.gmtCreate,
+    },
+    {
+      title: (
+        <>
+          支付时间
+          <Tooltip placement="top" title="用户支付时间">
+            <QuestionCircleOutlined style={{ marginLeft: 4 }} />
+          </Tooltip>
+        </>
+      ),
+      width: 140,
+      key: 'since',
+      dataIndex: 'paymentTime',
+      valueType: 'date',
+      sorter: (a, b) => a.paymentTime - b.paymentTime,
+    },
+    {
+      title: '操作',
+      width: 164,
+      key: 'option',
+      valueType: 'option',
+      render: () => [
+        <a key="1" onClick={showModal}>改变订单状态</a>,
+        <a key="2" onClick={handleRemove}>删除</a>,
+      ],
+    },
+  ];
 
   const expandedRow = (record: any) => {
     let url = "/api1/customer/orderItem/getByIds?";
@@ -147,13 +168,11 @@ export default () => {
     return (
       <ProTable
         columns={[
-          { title: '商铺ID', dataIndex: 'storeId', key: 'storeId' },
-          { title: '用户ID', dataIndex: 'userId', key: 'userId' },
-  
           { title: '商品ID', dataIndex: 'commodityId', key: 'commodityId' },
           { title: '数量', dataIndex: 'number', key: 'number' },
-          { title: '租期', dataIndex: 'rentDays', key: 'rentDays' },
-          { title: '状态', dataIndex: 'status', key: 'status' },
+          { title: '租金', dataIndex: 'rentPrice', key: 'rentPrice' },
+          { title: '状态', dataIndex: 'orderStatus', key: 'orderStatus' },
+          { title: '商品参数', dataIndex: 'uniform', key: 'uniform' },
           {
             title: 'Action',
             dataIndex: 'operation',
@@ -172,6 +191,7 @@ export default () => {
   };
   
   return (
+    <>
     <ProTable<TableListItem>
       columns={columns}
       /*
@@ -215,5 +235,16 @@ export default () => {
         </Button>,
       ]}
     />
+    <Modal title="改变订单状态" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+    <Select defaultValue="未支付" style={{ width: 240 }}>
+      <Option value="UNPAY">未支付</Option>
+      <Option value="UNSEND">待发货</Option>
+      <Option value="UNRECEIVE">已发货</Option>
+      <Option value="AFTERSALE">售后中</Option>
+      <Option value="USING">正在使用</Option>
+      <Option value="HAVEBACK">已归还</Option>
+    </Select>
+  </Modal>
+  </>
   );
 };
