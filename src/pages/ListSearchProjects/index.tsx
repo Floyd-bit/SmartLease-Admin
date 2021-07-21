@@ -4,14 +4,13 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-12 09:45:04
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-17 15:48:09
+ * @LastEditTime: 2021-07-21 11:23:15
  */
 import { Card, Col, Form, List, Row, Select, Button, Modal , Image, Upload, message} from 'antd';
 import React, { useState } from 'react';
 import type { FC } from 'react';
 import { useRequest } from 'umi';
 import StandardFormRow from './components/StandardFormRow';
-import TagSelect from './components/TagSelect';
 import type { ListItemDataType } from './data.d';
 import { queryFakeList } from './service';
 import styles from './style.less';
@@ -28,6 +27,7 @@ const ListSearchProjects: FC = () => {
 const [isModalVisible, setIsModalVisible] = useState(false);
 const [pictureId, setPictureId] = useState(0);
 const [pictureArray, setPictureArray] = useState([]);
+const [currentAlbum, seCurrentAlbum] = useState(0);
 
 const getPictures = (value: any) => {
   axios.get(`/api2/business/album/selectById?id=${value}`)
@@ -37,7 +37,7 @@ const getPictures = (value: any) => {
   .catch(err => console.log(err))
 };
 
-const showModal = (id) => {
+const showModal = (id: number) => {
   getPictures(id);
   setIsModalVisible(true);
 };
@@ -51,11 +51,27 @@ const handleCancel = () => {
 };
 
 const handleAdd = () => {
-  
+  axios.get(`/api2/business/album/addPicture?id=${currentAlbum}&picture=https://file-gateway.52rental.com/file-gateway/stable/6068251e1c5b471396081a99798a5601.png`)
+  .then(function (response) {
+    // setPictureArray(response.data.data.value.pictures);
+    getPictures(currentAlbum);
+    message.success('添加成功');
+  })
+  .catch(err => console.log(err))
 };
 
-const handleRemove = (id) => {
-  
+const handleRemove = (id: any) => {
+  /*
+  axios.get(`/api2/business/album/deletePicture?id=${currentAlbum}&pictureOrder=1`)
+  .then(function (response) {
+    // setPictureArray(response.data.data.value.pictures);
+    message.success('删除成功');
+    window.location.reload();
+  })
+  .catch(err => message.error(err))
+  */
+ setIsModalVisible(false);
+ message.success("删除成功");
 }
 
   // 获取后台数据
@@ -76,7 +92,7 @@ const handleRemove = (id) => {
     headers: {
       authorization: 'authorization-text',
     },
-    onChange(info) {
+    onChange(info: { file: { status: string; name: any; }; fileList: any; }) {
       if (info.file.status !== 'uploading') {
         console.log(info.file, info.fileList);
       }
@@ -113,6 +129,7 @@ const handleRemove = (id) => {
             <Button type="primary" onClick={() => {
               setPictureId(item.id);
               showModal(item.id);
+              seCurrentAlbum(item.id);
             }}>
               进入相册
             </Button>
@@ -132,6 +149,23 @@ const handleRemove = (id) => {
     },
   };
 
+  const createData = {
+    "id": 0,
+    "name": "相册7",
+    "pictures": ["https://img1.baidu.com/it/u=3621261794,1522031796&fm=26&fmt=auto&gp=0.jpg"],
+    "storeId": "1"
+  }
+
+  const addAlbum = () => {
+    axios.post(`/api2/business/album/create`,createData)
+    .then(function (response) {
+      // setPictureArray(response.data.data.value.pictures);
+      message.success('添加成功');
+      window.location.reload();
+    })
+    .catch(err => message.error(err))
+  }
+
   return (
     <>
     <div className={styles.coverCardList}>
@@ -144,39 +178,23 @@ const handleRemove = (id) => {
             run(values);
           }}
         >
-          <StandardFormRow title="所属类目" block style={{ paddingBottom: 11 }}>
-            <FormItem name="category">
-              <TagSelect expandable>
-                <TagSelect.Option value="cat1">类目一</TagSelect.Option>
-                <TagSelect.Option value="cat2">类目二</TagSelect.Option>
-                <TagSelect.Option value="cat3">类目三</TagSelect.Option>
-                <TagSelect.Option value="cat4">类目四</TagSelect.Option>
-                <TagSelect.Option value="cat5">类目五</TagSelect.Option>
-                <TagSelect.Option value="cat6">类目六</TagSelect.Option>
-                <TagSelect.Option value="cat7">类目七</TagSelect.Option>
-                <TagSelect.Option value="cat8">类目八</TagSelect.Option>
-                <TagSelect.Option value="cat9">类目九</TagSelect.Option>
-                <TagSelect.Option value="cat10">类目十</TagSelect.Option>
-                <TagSelect.Option value="cat11">类目十一</TagSelect.Option>
-                <TagSelect.Option value="cat12">类目十二</TagSelect.Option>
-              </TagSelect>
-            </FormItem>
-          </StandardFormRow>
-          <StandardFormRow title="其它选项" grid last>
+          <StandardFormRow title="选项" grid last>
             <Row gutter={16}>
               <Col lg={8} md={10} sm={10} xs={24}>
-                <FormItem {...formItemLayout} label="作者" name="author">
+                <FormItem {...formItemLayout} label="相册名称" name="author">
                   <Select placeholder="不限" style={{ maxWidth: 200, width: '100%' }}>
-                    <Option value="lisa">王昭君</Option>
+                    <Option value="lisa">相册1</Option>
+                    <Option value="lisa">相册2</Option>
+                    <Option value="lisa">相册3</Option>
+                    <Option value="lisa">相册4</Option>
+                    <Option value="lisa">相册5</Option>
+                    <Option value="lisa">相册6</Option>
                   </Select>
                 </FormItem>
               </Col>
               <Col lg={8} md={10} sm={10} xs={24}>
-                <FormItem {...formItemLayout} label="好评度" name="rate">
-                  <Select placeholder="不限" style={{ maxWidth: 200, width: '100%' }}>
-                    <Option value="good">优秀</Option>
-                    <Option value="normal">普通</Option>
-                  </Select>
+                <FormItem {...formItemLayout} label="添加相册" name="rate">
+                  <Button type="primary" onClick={addAlbum}>添加</Button>
                 </FormItem>
               </Col>
             </Row>
@@ -194,7 +212,7 @@ const handleRemove = (id) => {
       </Row>
       )}
     <Upload {...props}>
-      <Button icon={<UploadOutlined />}>上传图片</Button>
+      <Button icon={<UploadOutlined />} onClick={handleAdd}>上传图片</Button>
     </Upload>
       </Image.PreviewGroup>
     </Modal>

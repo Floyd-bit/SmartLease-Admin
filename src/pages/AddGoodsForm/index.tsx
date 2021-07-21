@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-09 11:24:06
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-20 10:00:24
+ * @LastEditTime: 2021-07-21 10:40:20
  */
 import { Button, Card, message } from 'antd';
 import ProForm, {
@@ -90,8 +90,9 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
       rentTime: '1',
       number: 1,
       score: 1,
-      storeId: 0,
-      storeName: '1',
+      subImages: 'https://file-gateway.52rental.com/file-gateway/stable/b4558fa0ccad4b3a8d243c2fa8e94759.png',
+      storeId: 1,
+      storeName: '租赁专业户',
       tardingVolume: 0,
       mark: 0,
       guaranteePrice: 100,
