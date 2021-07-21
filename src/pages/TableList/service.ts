@@ -4,13 +4,13 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-20 16:19:10
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-20 16:24:06
+ * @LastEditTime: 2021-07-21 08:51:48
  */
 import { request } from 'umi';
 import type { TableListItem } from '.';
 
 export async function queryRule(params?: TableListItem) {
     console.log(params);
-    return request(`/api1/customer/order/getByUserId?pageNum=1&pageSize=3`
+    return request(`/api1/customer/order/getByUserId?pageNum=1&pageSize=5&userId=2`
     );
   }

@@ -4,43 +4,16 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-20 16:30:16
+ * @LastEditTime: 2021-07-21 10:19:32
  */
-import React from 'react';
-import { Button, Tooltip, Tag } from 'antd';
+import React,{useState,useEffect} from 'react';
+import { Button, Tooltip, Tag, message } from 'antd';
 import { DownOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { useRequest } from '@/.umi/plugin-request/request';
 import { queryRule } from './service';
-
-export type Status = {
-  color: string;
-  text: string;
-};
-
-const statusMap = {
-  0: {
-    color: 'blue',
-    text: '进行中',
-  },
-  1: {
-    color: 'green',
-    text: '已完成',
-  },
-  2: {
-    color: 'volcano',
-    text: '警告',
-  },
-  3: {
-    color: 'red',
-    text: '失败',
-  },
-  4: {
-    color: '',
-    text: '未完成',
-  },
-};
+import axios from 'axios';
 
 export type TableListItem = {
   id: number; // 订单号
@@ -53,12 +26,12 @@ export type TableListItem = {
   name: string;
   containers: number;
   creator: string;
-  status: Status;
+  status: string;
   createdAt: number;
 };
 
 
-const tableListDataSource: TableListItem[] = [];
+// const tableListDataSource: TableListItem[] = [];
 
 // const creators = ['付小小', '曲丽丽', '林东东', '陈帅帅', '兼某某'];
 
@@ -86,7 +59,7 @@ const columns: ProColumns<TableListItem>[] = [
     title: '状态',
     width: 120,
     dataIndex: 'status',
-    render: (_, record) => <Tag color={record.status.color}>{record.status.text}</Tag>,
+    // render: (_, record) => <Tag color={record.status.color}>{record.status.text}</Tag>,
   },
   {
     title: '折扣',
@@ -150,44 +123,54 @@ const columns: ProColumns<TableListItem>[] = [
   },
 ];
 
-const expandedRowRender = () => {
-  const data = [];
-  for (let i = 0; i < 3; i += 1) {
-    data.push({
-      key: i,
-      date: '2014-12-24 23:12:00',
-      name: 'This is production name',
-      upgradeNum: 'Upgraded: 56',
-    });
-  }
-  return (
-    <ProTable
-      columns={[
-        { title: '商铺ID', dataIndex: 'storeId', key: 'storeId' },
-        { title: '用户ID', dataIndex: 'userId', key: 'userId' },
-
-        { title: '商品ID', dataIndex: 'commodityId', key: 'commodityId' },
-        { title: '数量', dataIndex: 'number', key: 'number' },
-        { title: '租期', dataIndex: 'rentDays', key: 'rentDays' },
-        { title: '状态', dataIndex: 'status', key: 'status' },
-        {
-          title: 'Action',
-          dataIndex: 'operation',
-          key: 'operation',
-          valueType: 'option',
-          render: () => [<a key="Pause">编辑</a>, <a key="Stop">删除</a>],
-        },
-      ]}
-      headerTitle={false}
-      search={false}
-      options={false}
-      dataSource={data}
-      pagination={false}
-    />
-  );
-};
 
 export default () => {
+  const [data,setData] = useState([]);
+
+  const expandedRow = (record: any) => {
+    let url = "/api1/customer/orderItem/getByIds?";
+    // console.log(record.orderItems);
+    record.orderItemIds.forEach((item: any)=>{url += `ids=${item}&`});
+    // function getData(){
+      axios.get(url)
+      .then(function (response) {
+        // console.log("response.data.data.value",response.data.data.value)
+        setData(response.data.data.value);
+        // console.log("data",data)
+        
+      })
+      .catch(err => message.error(err))
+    // }
+    // record.orderItemIds
+    // getData();
+    // console.log(data);
+    return (
+      <ProTable
+        columns={[
+          { title: '商铺ID', dataIndex: 'storeId', key: 'storeId' },
+          { title: '用户ID', dataIndex: 'userId', key: 'userId' },
+  
+          { title: '商品ID', dataIndex: 'commodityId', key: 'commodityId' },
+          { title: '数量', dataIndex: 'number', key: 'number' },
+          { title: '租期', dataIndex: 'rentDays', key: 'rentDays' },
+          { title: '状态', dataIndex: 'status', key: 'status' },
+          {
+            title: 'Action',
+            dataIndex: 'operation',
+            key: 'operation',
+            valueType: 'option',
+            render: () => [<a key="Pause">编辑</a>, <a key="Stop">删除</a>],
+          },
+        ]}
+        headerTitle={false}
+        search={false}
+        options={false}
+        dataSource={data}
+        pagination={false}
+      />
+    );
+  };
+  
   return (
     <ProTable<TableListItem>
       columns={columns}
@@ -202,7 +185,7 @@ export default () => {
       }}
       */
       request={
-        (params,sorter,filter) => queryRule({ ...params,filter,currentPage}).then(response => {
+        (params) => queryRule({ ...params}).then(response => {
           const result = {
             data: response.data.value.records.map((item: any,i: any) => {
               return {
@@ -218,7 +201,8 @@ export default () => {
       pagination={{
         showQuickJumper: true,
       }}
-      expandable={{ expandedRowRender }}
+      // expandable={{ expandedRowRender }}
+      expandable={{expandedRowRender: record => expandedRow(record)}}
       search={false}
       dateFormatter="string"
       headerTitle="订单管理"
