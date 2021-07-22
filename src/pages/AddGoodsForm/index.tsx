@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-09 11:24:06
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-21 10:40:20
+ * @LastEditTime: 2021-07-22 14:49:36
  */
 import { Button, Card, message } from 'antd';
 import ProForm, {
@@ -78,14 +78,20 @@ const AddGoodsForm: FC<Record<string, any>> = () => {
       ...values,
       commodityStatus: status,
       attribute: {
+        /*
         additionalProp1: values.additionalProp1,
         additionalProp2: values.additionalProp2,
         additionalProp3: values.additionalProp3,
+        */
+        "origin":"武汉","weight":"2kg","detailImage":"https://img.alicdn.com/imgextra/i2/847491752/O1CN01YeZ2HY1OoSaL5choQ_!!847491752.jpg","options":"[{\"title\":\"颜色\",\"values\":[\"银色\",\"蓝色\",\"黑色\"]},{\"title\":\"材质\",\"values\":[\"金属\",\"塑料\",\"陶瓷\"]}]"
       },
       type: [values.type],
       uniform: {
+        /*
         additionalProp1: [values.additionalProp4],
         additionalProp2: [values.additionalProp5],
+        */
+        "images":["https://gd1.alicdn.com/imgextra/i1/847491752/O1CN01yacgLS1OoSaNHEwTN_!!847491752.jpg","https://gd2.alicdn.com/imgextra/i2/847491752/O1CN01NPvr8u1OoSY888eP8_!!847491752.jpg","https://gd3.alicdn.com/imgextra/i3/847491752/O1CN01Zq89n01OoSYBXApdX_!!847491752.jpg","https://gd2.alicdn.com/imgextra/i4/847491752/O1CN01mRT1M51OoSaQQHKyY_!!847491752.jpg"]
       },
       rentTime: '1',
       number: 1,

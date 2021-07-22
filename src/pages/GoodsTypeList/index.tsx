@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-06 11:20:47
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-20 14:43:11
+ * @LastEditTime: 2021-07-22 11:05:43
  */
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, message, Input, Drawer ,Tabs} from 'antd';
@@ -51,9 +51,7 @@ const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('Configuring');
   try {
     await updateRule({
-      name: fields.name,
-      desc: fields.desc,
-      key: fields.key,
+      id: fields.id,
     });
     hide();
 
@@ -447,6 +445,7 @@ const GoodsTypeList: React.FC = () => {
       </ModalForm>
       <UpdateForm
         onSubmit={async (value) => {
+          // console.log(value);
           const success = await handleUpdate(value);
           if (success) {
             handleUpdateModalVisible(false);
@@ -481,7 +480,21 @@ const GoodsTypeList: React.FC = () => {
               data: currentRow || {},
             })}
             params={{
-              id: currentRow?.commodityName,
+              id: currentRow?.id,
+              /*
+              commodityName: currentRow?.commodityName,
+              commodityStatus: currentRow?.commodityStatus,
+              // description: currentRow?.description,
+              guaranteePrice: currentRow?.guaranteePrice,
+              number: currentRow?.number,
+              // rentDays: currentRow?.rentDays,
+              // rentPrice: currentRow?.rentPrice,
+              // rentTime: currentRow.rentTime,
+              storeId: 1,
+              subImages: currentRow?.subImages,
+              title: currentRow?.commodityName,
+              gmtCreate: currentRow?.createdAt,
+              */
             }}
             columns={columns as ProDescriptionsItemProps<TableListItem>[]}
           />

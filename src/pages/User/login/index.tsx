@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 17:23:57
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-20 23:16:18
+ * @LastEditTime: 2021-07-22 14:18:59
  */
 import {
   AlipayCircleOutlined,
@@ -192,7 +192,7 @@ const Login: React.FC<LoginProps> = (props) => {
               }}
               placeholder={intl.formatMessage({
                 id: 'pages.login.password.placeholder',
-                defaultMessage: 'Password: ant.design',
+                defaultMessage: 'Password: 123456',
               })}
               rules={[
                 {

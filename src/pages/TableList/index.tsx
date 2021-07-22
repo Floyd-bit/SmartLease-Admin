@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-21 23:48:10
+ * @LastEditTime: 2021-07-22 14:41:28
  */
 import React,{useState} from 'react';
 import { Button, Tooltip, Tag, message, Modal, Select } from 'antd';
@@ -100,7 +100,7 @@ export default () => {
       align: 'right',
     },
     {
-      title: '运费',
+      title: '总价',
       width: 120,
       dataIndex: 'transportPrice',
       align: 'right',
@@ -132,9 +132,8 @@ export default () => {
       ),
       width: 140,
       key: 'since',
-      dataIndex: 'paymentTime',
+      dataIndex: 'gmtUpdate',
       valueType: 'date',
-      sorter: (a, b) => a.paymentTime - b.paymentTime,
     },
     {
       title: '操作',
@@ -168,18 +167,13 @@ export default () => {
     return (
       <ProTable
         columns={[
+          { title: '商铺ID', dataIndex: 'storeId', key: 'storeId' },
           { title: '商品ID', dataIndex: 'commodityId', key: 'commodityId' },
           { title: '数量', dataIndex: 'number', key: 'number' },
-          { title: '租金', dataIndex: 'rentPrice', key: 'rentPrice' },
-          { title: '状态', dataIndex: 'orderStatus', key: 'orderStatus' },
-          { title: '商品参数', dataIndex: 'uniform', key: 'uniform' },
-          {
-            title: 'Action',
-            dataIndex: 'operation',
-            key: 'operation',
-            valueType: 'option',
-            render: () => [<a key="Pause">编辑</a>, <a key="Stop">删除</a>],
-          },
+          { title: '租金', dataIndex: 'payment', key: 'payment' },
+          { title: '状态', dataIndex: 'status', key: 'status' },
+          { title: '总价', dataIndex: 'transportPrice', key: 'transportPrice' },
+          { title: '租期', dataIndex: 'rentDays', key: 'rentDays' },
         ]}
         headerTitle={false}
         search={false}

@@ -4,9 +4,9 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-19 09:37:07
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-21 11:54:13
+ * @LastEditTime: 2021-07-22 15:06:56
  */
-import {  Button, Card, Form, Input, List, Typography, Modal } from 'antd';
+import {  Button, Card, Form, Input, List, Typography, Modal, message } from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
 import { useRequest } from 'umi';
 import { queryFakeList } from './service';
@@ -48,10 +48,11 @@ const StoreList = () => {
   const [currentShop, setCurrentShop] = useState(0);
   const showModal = () => {
     setIsModalVisible(true);
+    console.log(currentShop);
   };
 
   const handleOk = () => {
-    onFinish(1);
+    // onFinish(1);
     setIsModalVisible(false);
   };
 
@@ -59,13 +60,24 @@ const StoreList = () => {
     setIsModalVisible(false);
   };
 
+  const handleRemove = () => {
+    axios.delete(`/api2/business/store/deleteById?id=${currentShop}`)
+    .then((res) => {
+      message.success(res.data.message);
+      window.location.reload();
+    })
+    .catch( message.error('删除失败'))
+  };
+
   const onFinish = (values: any) => {
     // console.log(values);
+    /*
     axios.put(`/api2/business/store/update?creditScore=5&id=${currentShop}&storekeeperId=1&storeName=${values.storeName}&introduction=${values.introduction}`)
     .then(function (response) {
       message.success(response.data.message);
     })
     .catch(err => console.log(err))
+    */
   };
   
   const onFinishFailed = (errorInfo: any) => {
@@ -94,7 +106,7 @@ const StoreList = () => {
                   <Card
                     hoverable
                     className={styles.card}
-                    actions={[<a key="option1" onClick={()=> {setCurrentShop(item.id);showModal();}}>编辑信息</a>, <a key="option2">删除商铺</a>]}
+                    actions={[<a key="option1" onClick={()=> {setCurrentShop(item.id);showModal();}}>编辑信息</a>, <a key="option2" onClick={()=> {setCurrentShop(item.id); handleRemove();}}>删除商铺</a>]}
                   >
                     <Card.Meta
                       avatar={<img alt="" className={styles.cardAvatar} src={item.icon} />}
@@ -117,7 +129,7 @@ const StoreList = () => {
           name="basic"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
-          initialValues={{ storeName: "珞珈大自强" ,introduction: "自强超市"} }
+          initialValues={{ storeName: "移动硬盘租赁店" ,introduction: "专营各类移动硬盘的租赁"} }
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
         >

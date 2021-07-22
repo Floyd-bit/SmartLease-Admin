@@ -4,15 +4,15 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 17:23:57
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-10 09:45:03
+ * @LastEditTime: 2021-07-22 14:19:32
  */
 export default {
   'pages.layouts.userLayout.title': '智能化共享租赁平台',
   'pages.login.accountLogin.tab': '账户密码登录',
   'pages.login.accountLogin.errorMessage': '错误的用户名和密码（admin/ant.design)',
-  'pages.login.username.placeholder': '用户名: admin or user',
+  'pages.login.username.placeholder': '用户名: admin',
   'pages.login.username.required': '用户名是必填项！',
-  'pages.login.password.placeholder': '密码: ant.design',
+  'pages.login.password.placeholder': '密码: 123456',
   'pages.login.password.required': '密码是必填项！',
   'pages.login.phoneLogin.tab': '手机号登录',
   'pages.login.phoneLogin.errorMessage': '验证码错误',
