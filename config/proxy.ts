@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-23 16:38:20
+ * @LastEditTime: 2021-07-23 17:01:52
  */
 /**
  * 在生产环境 代理是无法生效的，所以这里没有生产环境的配置
@@ -49,6 +49,12 @@ export default {
       // target: 'http://localhost:8081/',
       changeOrigin: true,
       pathRewrite: { '^/api5': '' },
+    },
+    '/api6': {
+      target: 'https://service-mif38upx-1300473173.sh.apigw.tencentcs.com/',
+      // target: 'http://localhost:8081/',
+      changeOrigin: true,
+      pathRewrite: { '^/api6': '' },
     }
   },
   test: {

@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-22 14:41:28
+ * @LastEditTime: 2021-07-23 17:03:13
  */
 import React,{useState} from 'react';
 import { Button, Tooltip, Tag, message, Modal, Select } from 'antd';
@@ -34,6 +34,10 @@ export type TableListItem = {
   orderStatus: string;
 };
 
+export type statusType = {
+  id: number; // 订单号
+  status: number; // 改变状态
+}
 
 // const tableListDataSource: TableListItem[] = [];
 
