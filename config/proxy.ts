@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-16 20:57:28
+ * @LastEditTime: 2021-07-23 16:38:20
  */
 /**
  * 在生产环境 代理是无法生效的，所以这里没有生产环境的配置
@@ -43,6 +43,12 @@ export default {
       target: 'https://www.fastmock.site/mock/f2f3a8f80b2f20a819f4802a5b9d1550/bao/',
       changeOrigin: true,
       pathRewrite: {'^/api4': ''}
+    },
+    '/api5': {
+      target: 'http://rap2api.taobao.org/app/mock/287560/',
+      // target: 'http://localhost:8081/',
+      changeOrigin: true,
+      pathRewrite: { '^/api5': '' },
     }
   },
   test: {
