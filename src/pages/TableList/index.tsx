@@ -4,7 +4,7 @@
  * @Author: 赵卓轩
  * @Date: 2021-07-05 10:45:55
  * @LastEditors: 赵卓轩
- * @LastEditTime: 2021-07-23 17:03:13
+ * @LastEditTime: 2021-07-23 18:49:50
  */
 import React,{useState} from 'react';
 import { Button, Tooltip, Tag, message, Modal, Select } from 'antd';
@@ -64,6 +64,8 @@ const handleRemove = () => {
 export default () => {
   const [data,setData] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentId,setCurrentId] = useState(0);
+  const [status,setStauts] = useState('');
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -71,6 +73,35 @@ export default () => {
 
   const handleOk = () => {
     setIsModalVisible(false);
+    let statusNum;
+    switch(status){
+      case '待付款': 
+      statusNum=1;
+      break;
+      case '待发货': 
+      statusNum=2;
+      break;
+      case '待收货': 
+      statusNum=3;
+      break;
+      case '使用中': 
+      statusNum=4;
+      break;
+      case '未退还': 
+      statusNum=5;
+      break;
+      case '已归还': 
+        statusNum=7;
+        break;
+      default: statusNum =1;
+    }
+    
+    axios.put(`/api6/release/edit-order-status?id=${currentId}&status=${statusNum}`)
+    .then((res) => {
+      message.success(res.data);
+      window.location.reload();
+    })
+    
   };
 
   const handleCancel = () => {
@@ -144,8 +175,8 @@ export default () => {
       width: 164,
       key: 'option',
       valueType: 'option',
-      render: () => [
-        <a key="1" onClick={showModal}>改变订单状态</a>,
+      render: (_,record) => [
+        <a key="1" onClick={()=>{showModal();setCurrentId(record.id);}}>改变订单状态</a>,
         <a key="2" onClick={handleRemove}>删除</a>,
       ],
     },
@@ -234,12 +265,12 @@ export default () => {
       ]}
     />
     <Modal title="改变订单状态" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-    <Select defaultValue="未支付" style={{ width: 240 }}>
-      <Option value="UNPAY">未支付</Option>
+    <Select defaultValue="未支付" style={{ width: 240 }} onChange={(value)=>{setStauts(value)}}>
+      <Option value="UNPAY">待付款</Option>
       <Option value="UNSEND">待发货</Option>
-      <Option value="UNRECEIVE">已发货</Option>
+      <Option value="UNRECEIVE">待收货</Option>
       <Option value="AFTERSALE">售后中</Option>
-      <Option value="USING">正在使用</Option>
+      <Option value="USING">使用中</Option>
       <Option value="HAVEBACK">已归还</Option>
     </Select>
   </Modal>
